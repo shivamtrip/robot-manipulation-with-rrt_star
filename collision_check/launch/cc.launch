@@ -1,0 +1,3 @@
+<launch>
+  <node name="cc_node" pkg="collision_check" type="cc" output="screen"/>
+</launch>
