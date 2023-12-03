@@ -1,3 +1,3 @@
 <launch>
-  <node name="cc_node" pkg="collision_check" type="cc" output="screen"/>
+  <node name="collision_check_node" pkg="collision_check" type="collision_check_node" output="screen"/>
 </launch>

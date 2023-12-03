@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>collision_check</name>
+  <name>control_node</name>
   <version>0.0.0</version>
-  <description>The collision_check package</description>
+  <description>The control_node package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but multiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/collision_check</url> -->
+  <!-- <url type="website">http://wiki.ros.org/control_node</url> -->
 
 
   <!-- Author tags are optional, multiple are allowed, one per tag -->
@@ -32,10 +32,10 @@
   <!-- Dependencies can be catkin packages or system dependencies -->
   <!-- Examples: -->
   <!-- Use depend as a shortcut for packages that are both build and exec dependencies -->
-    <depend>roscpp</depend>
+  <!--   <depend>roscpp</depend> -->
   <!--   Note that this is equivalent to the following: -->
-    <!-- <build_depend>roscpp</build_depend> -->
-    <!-- <exec_depend>roscpp</exec_depend> -->
+  <!--   <build_depend>roscpp</build_depend> -->
+  <!--   <exec_depend>roscpp</exec_depend> -->
   <!-- Use build_depend for packages you need at compile time: -->
   <!--   <build_depend>message_generation</build_depend> -->
   <!-- Use build_export_depend for packages you need in order to build against this package: -->
@@ -49,8 +49,6 @@
   <!-- Use doc_depend for packages you need only for building documentation: -->
   <!--   <doc_depend>doxygen</doc_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
-  <!-- <build_depend>move_it_ros_planing_interface</build_depend> -->
-  <!-- <exec_depend>move_it_ros_planing_interface</exec_depend> -->
 
 
   <!-- The export tag contains other, unspecified, tags -->
