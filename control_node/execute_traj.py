@@ -51,7 +51,7 @@ class MoveArm:
    
     def GoToWaypoint(self, Waypoint, index):
         try:
-            rospy.logwarn("-----TEST-------")
+            rospy.logwarn("Moving to Waypoint: "+ str(index) + "/60")
             # We get the joint values from the group and change some of the values:
             joint_goal = self.move_group.get_current_joint_values()
             joint_goal[0] = Waypoint[0] 
@@ -93,4 +93,4 @@ if __name__ == '__main__':
 
         for i in range(len(Trajectory)):
             robot_controller.GoToWaypoint(Trajectory[i], i)
-            rospy.sleep(0.2)
+            # rospy.sleep(0.1)
