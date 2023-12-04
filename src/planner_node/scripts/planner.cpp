@@ -779,7 +779,7 @@ int main(int argc, char** argv) {
     double* startPos = doubleArrayFromString(start_pos_str);
     double* goalPos = doubleArrayFromString(goal_pos_str);
 
-    // find a random valid start and goal position //todo: comment out
+    // find a random valid start and goal position //todo: comment out while loop after we set start and goal
     while(true){
         startPos[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
         startPos[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
@@ -797,7 +797,7 @@ int main(int argc, char** argv) {
 
         if( IsValidArmConfiguration(planning_scene, kinematic_model, startPos) && IsValidArmConfiguration(planning_scene, kinematic_model, goalPos) ){
             break;
-        }//todo: update this to our desired and final goal//todo: update this to our desired and final goal
+        }
     }
     cout << "start position: " << endl;
     for (size_t i = 0; i < numOfDOFs; i++) {
