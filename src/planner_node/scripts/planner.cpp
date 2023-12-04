@@ -116,12 +116,12 @@ int IsValidArmConfiguration(const planning_scene::PlanningScenePtr& planning_sce
 
     if (collision_result.collision)
     {
-        ROS_INFO("Collision detected for the given joint configuration!");
+        // ROS_INFO("Collision detected for the given joint configuration!");
         return 0;
     }
     else
     {
-        ROS_INFO("No collision detected for the given joint configuration.");
+        // ROS_INFO("No collision detected for the given joint configuration.");
         return 1;
     }
 }
@@ -764,22 +764,22 @@ int main(int argc, char** argv) {
 
     srand(time(NULL));
 
-	int numOfDOFs;
-    int whichPlanner;
-    string outputFile;
-    string start_pos_str;
-    string goal_pos_str;
+	int numOfDOFs = 6;
+    int whichPlanner = 2;
+    string outputFile = "output.txt";
+    string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0"; //todo: update this to our desired and final goal
+    string goal_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0";
 
-    nh.param("num_of_dofs", numOfDOFs);
-    nh.param("output_file", outputFile);
-    nh.param("planner_type", whichPlanner);
-    nh.param("start_position", start_pos_str);
-    nh.param("goal_position", goal_pos_str);
+    // nh.param("num_of_dofs", numOfDOFs);
+    // nh.param("output_file", outputFile);
+    // nh.param("planner_type", whichPlanner);
+    // nh.param("start_position", start_pos_str);
+    // nh.param("goal_position", goal_pos_str);
 
     double* startPos = doubleArrayFromString(start_pos_str);
     double* goalPos = doubleArrayFromString(goal_pos_str);
 
-    // find a random valid start and goal position //todo: update this to our desired and final goal
+    // find a random valid start and goal position //todo: comment out
     while(true){
         startPos[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
         startPos[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
@@ -797,7 +797,7 @@ int main(int argc, char** argv) {
 
         if( IsValidArmConfiguration(planning_scene, kinematic_model, startPos) && IsValidArmConfiguration(planning_scene, kinematic_model, goalPos) ){
             break;
-        }
+        }//todo: update this to our desired and final goal//todo: update this to our desired and final goal
     }
     cout << "start position: " << endl;
     for (size_t i = 0; i < numOfDOFs; i++) {
@@ -849,10 +849,13 @@ int main(int argc, char** argv) {
 		throw std::runtime_error("Cannot open file");
 	}
 	/// write out all the joint angles in the plan sequentially
+    cout << "Generated Trajectory:" << endl;
 	for (int i = 0; i < planlength; ++i) {
 		for (int k = 0; k < numOfDOFs; ++k) {
 			m_log_fstream << plan[i][k] << ",";
+            cout << plan[i][k] << ",";
 		}
 		m_log_fstream << endl;
+        cout << endl;
 	}
 }

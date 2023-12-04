@@ -1,18 +1,18 @@
 <launch>
     <!-- Set default values for parameters -->
-    <param name="num_of_dofs" type="int" value="6" />
-    <param name="start_position" type="string" value="0.0,0.0,0.0,0.0,0.0,0.0" />
-    <param name="goal_position" type="string" value="1.0,1.0,1.0,1.0,1.0,1.0" />
-    <param name="planner_type" type="int" value="0" />
-    <param name="output_file" type="string" value="output_plan.txt" />
+    <!-- <param name="num_of_dofs" type="int" value="6" /> -->
+    <!-- <param name="start_position" type="string" value="0.0,0.0,0.0,0.0,0.0,0.0" /> -->
+    <!-- <param name="goal_position" type="string" value="1.0,1.0,1.0,1.0,1.0,1.0" /> -->
+    <!-- <param name="planner_type" type="int" value="0" /> -->
+    <!-- <param name="output_file" type="string" value="output_plan.txt" /> -->
 
     <!-- Launch your ROS node -->
     <node name="planner_node" pkg="planner" type="planner_node" output="screen">
         <!-- Arguments are set using parameters -->
-        <param name="num_of_dofs" value="$(arg num_of_dofs)" />
-        <param name="start_position" value="$(arg start_position)" />
-        <param name="goal_position" value="$(arg goal_position)" />
-        <param name="planner_type" value="$(arg planner_type)" />
-        <param name="output_file" value="$(arg output_file)" />
+        <!-- <param name="num_of_dofs" value="$(arg num_of_dofs)" /> -->
+        <!-- <param name="start_position" value="$(arg start_position)" /> -->
+        <!-- <param name="goal_position" value="$(arg goal_position)" /> -->
+        <!-- <param name="planner_type" value="$(arg planner_type)" /> -->
+        <!-- <param name="output_file" value="$(arg output_file)" /> -->
     </node>
 </launch>
