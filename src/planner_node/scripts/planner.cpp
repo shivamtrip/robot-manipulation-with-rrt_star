@@ -3,6 +3,12 @@
  * planner.c
  *
  *=================================================================*/
+#include <ros/ros.h>
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/planning_scene_monitor/planning_scene_monitor.h>
+#include <moveit/robot_model_loader/robot_model_loader.h>
+#include <moveit/robot_state/robot_state.h>
+
 #include <math.h>
 #include <random>
 #include <vector>
@@ -24,25 +30,10 @@
 #include <fstream> // For reading/writing files
 #include <assert.h>
 
-// #include "RRT.hpp"
-
-/* Input Arguments */
-#define	MAP_IN      prhs[0]
-#define	ARMSTART_IN	prhs[1]
-#define	ARMGOAL_IN     prhs[2]
-#define	PLANNER_ID_IN     prhs[3]
-
 /* Planner Ids */
 #define RRT         0
 #define RRTCONNECT  1
 #define RRTSTAR     2
-#define PRM         3
-
-/* Output Arguments */
-#define	PLAN_OUT	plhs[0]
-#define	PLANLENGTH_OUT	plhs[1]
-
-#define GETMAPINDEX(X, Y, XSIZE, YSIZE) (Y*XSIZE + X)
 
 #if !defined(MAX)
 #define	MAX(A, B)	((A) > (B) ? (A) : (B))
@@ -54,10 +45,6 @@
 
 #define PI 3.141592654
 
-//the length of each link in the arm
-#define LINKLENGTH_CELLS 10
-
-// Some potentially helpful imports
 using std::vector;
 using std::array;
 using std::string;
@@ -72,48 +59,9 @@ using namespace std;
 
 //*******************************************************************************************************************//
 //                                                                                                                   //
-//                                                GIVEN FUNCTIONS                                                    //
+//                                                INITIAL FUNCTIONS                                                  //
 //                                                                                                                   //
 //*******************************************************************************************************************//
-
-/// @brief 
-/// @param filepath 
-/// @return map, x_size, y_size
-tuple<double*, int, int> loadMap(string filepath) {
-	std::FILE *f = fopen(filepath.c_str(), "r");
-	if (f) {
-	}
-	else {
-		printf("Opening file failed! \n");
-		throw runtime_error("Opening map file failed!");
-	}
-	int height, width;
-	if (fscanf(f, "height %d\nwidth %d\n", &height, &width) != 2) {
-		throw runtime_error("Invalid loadMap parsing map metadata");
-	}
-	
-	////// Go through file and add to m_occupancy
-	double* map = new double[height*width];
-
-	double cx, cy, cz;
-	for (int y = 0; y < height; y++) {
-		for (int x = 0; x < width; x++) {
-			char c;
-			do {
-				if (fscanf(f, "%c", &c) != 1) {
-					throw runtime_error("Invalid parsing individual map data");
-				}
-			} while (isspace(c));
-			if (!(c == '0')) { 
-				map[y+x*width] = 1; // Note transposed from visual
-			} else {
-				map[y+x*width] = 0;
-			}
-		}
-	}
-	fclose(f);
-	return make_tuple(map, width, height);
-}
 
 // Splits string based on deliminator
 vector<string> split(const string& str, const string& delim) {   
@@ -142,210 +90,40 @@ bool equalDoubleArrays(double* v1, double *v2, int size) {
     return true;
 }
 
-typedef struct {
-	int X1, Y1;
-	int X2, Y2;
-	int Increment;
-	int UsingYIndex;
-	int DeltaX, DeltaY;
-	int DTerm;
-	int IncrE, IncrNE;
-	int XIndex, YIndex;
-	int Flipped;
-} bresenham_param_t;
-
-
-void ContXY2Cell(double x, double y, short unsigned int* pX, short unsigned int *pY, int x_size, int y_size) {
-	double cellsize = 1.0;
-	//take the nearest cell
-	*pX = (int)(x/(double)(cellsize));
-	if( x < 0) *pX = 0;
-	if( *pX >= x_size) *pX = x_size-1;
-
-	*pY = (int)(y/(double)(cellsize));
-	if( y < 0) *pY = 0;
-	if( *pY >= y_size) *pY = y_size-1;
-}
-
-
-void get_bresenham_parameters(int p1x, int p1y, int p2x, int p2y, bresenham_param_t *params) {
-	params->UsingYIndex = 0;
-
-	if (fabs((double)(p2y-p1y)/(double)(p2x-p1x)) > 1)
-		(params->UsingYIndex)++;
-
-	if (params->UsingYIndex)
-		{
-			params->Y1=p1x;
-			params->X1=p1y;
-			params->Y2=p2x;
-			params->X2=p2y;
-		}
-	else
-		{
-			params->X1=p1x;
-			params->Y1=p1y;
-			params->X2=p2x;
-			params->Y2=p2y;
-		}
-
-	 if ((p2x - p1x) * (p2y - p1y) < 0)
-		{
-			params->Flipped = 1;
-			params->Y1 = -params->Y1;
-			params->Y2 = -params->Y2;
-		}
-	else
-		params->Flipped = 0;
-
-	if (params->X2 > params->X1)
-		params->Increment = 1;
-	else
-		params->Increment = -1;
-
-	params->DeltaX=params->X2-params->X1;
-	params->DeltaY=params->Y2-params->Y1;
-
-	params->IncrE=2*params->DeltaY*params->Increment;
-	params->IncrNE=2*(params->DeltaY-params->DeltaX)*params->Increment;
-	params->DTerm=(2*params->DeltaY-params->DeltaX)*params->Increment;
-
-	params->XIndex = params->X1;
-	params->YIndex = params->Y1;
-}
-
-void get_current_point(bresenham_param_t *params, int *x, int *y) {
-	if (params->UsingYIndex) {
-        *y = params->XIndex;
-        *x = params->YIndex;
-        if (params->Flipped)
-            *x = -*x;
+std::vector<double> doubleArrayToVector(const double* arr, int size) {
+    std::vector<double> vec;
+    vec.reserve(size); // Optional: Reserve memory for the vector to avoid reallocations
+    
+    for (int i = 0; i < size; ++i) {
+        vec.push_back(arr[i]);
     }
-	else {
-        *x = params->XIndex;
-        *y = params->YIndex;
-        if (params->Flipped)
-            *y = -*y;
-    }
+    
+    return vec;
 }
 
-int get_next_point(bresenham_param_t *params) {
-	if (params->XIndex == params->X2) {
+// check if the arm is in collision
+int IsValidArmConfiguration(const planning_scene::PlanningScenePtr& planning_scene, const robot_model::RobotModelPtr& kinematic_model, double* joint_values_arr){
+    auto joint_values = doubleArrayToVector(joint_values_arr, 6);
+
+    // Create a RobotState object for collision checking
+    robot_state::RobotState current_state(kinematic_model);
+    current_state.setJointGroupPositions("xarm6", joint_values);
+
+    // Check for collisions
+    collision_detection::CollisionRequest collision_request;
+    collision_detection::CollisionResult collision_result;
+    planning_scene->checkCollision(collision_request, collision_result, current_state);
+
+    if (collision_result.collision)
+    {
+        ROS_INFO("Collision detected for the given joint configuration!");
         return 0;
     }
-	params->XIndex += params->Increment;
-	if (params->DTerm < 0 || (params->Increment < 0 && params->DTerm <= 0))
-		params->DTerm += params->IncrE;
-	else {
-        params->DTerm += params->IncrNE;
-        params->YIndex += params->Increment;
-	}
-	return 1;
-}
-
-
-
-int IsValidLineSegment(double x0, double y0, double x1, double y1, double*	map,
-			 int x_size, int y_size) {
-	bresenham_param_t params;
-	int nX, nY; 
-	short unsigned int nX0, nY0, nX1, nY1;
-
-	//printf("checking link <%f %f> to <%f %f>\n", x0,y0,x1,y1);
-		
-	//make sure the line segment is inside the environment
-	if(x0 < 0 || x0 >= x_size ||
-		x1 < 0 || x1 >= x_size ||
-		y0 < 0 || y0 >= y_size ||
-		y1 < 0 || y1 >= y_size)
-		return 0;
-
-	ContXY2Cell(x0, y0, &nX0, &nY0, x_size, y_size);
-	ContXY2Cell(x1, y1, &nX1, &nY1, x_size, y_size);
-
-	//printf("checking link <%d %d> to <%d %d>\n", nX0,nY0,nX1,nY1);
-
-	//iterate through the points on the segment
-	get_bresenham_parameters(nX0, nY0, nX1, nY1, &params);
-	do {
-		get_current_point(&params, &nX, &nY);
-		if(map[GETMAPINDEX(nX,nY,x_size,y_size)] == 1)
-			return 0;
-	} while (get_next_point(&params));
-
-	return 1;
-}
-
-int IsValidArmConfiguration(double* angles, int numofDOFs, double*	map,
-			 int x_size, int y_size) {
-    double x0,y0,x1,y1;
-    int i;
-		
-	 //iterate through all the links starting with the base
-	x1 = ((double)x_size)/2.0;
-	y1 = 0;
-	for(i = 0; i < numofDOFs; i++){
-		//compute the corresponding line segment
-		x0 = x1;
-		y0 = y1;
-		x1 = x0 + LINKLENGTH_CELLS*cos(2*PI-angles[i]);
-		y1 = y0 - LINKLENGTH_CELLS*sin(2*PI-angles[i]);
-
-		//check the validity of the corresponding line segment
-		if(!IsValidLineSegment(x0,y0,x1,y1,map,x_size,y_size))
-			return 0;
-	}    
-	return 1;
-}
-
-//*******************************************************************************************************************//
-//                                                                                                                   //
-//                                          DEFAULT PLANNER FUNCTION                                                 //
-//                                                                                                                   //
-//*******************************************************************************************************************//
-
-static void planner(
-			double* map,
-			int x_size,
-			int y_size,
-			double* armstart_anglesV_rad,
-			double* armgoal_anglesV_rad,
-            int numofDOFs,
-            double*** plan,
-            int* planlength)
-{
-	//no plan by default
-	*plan = NULL;
-	*planlength = 0;
-		
-    //for now just do straight interpolation between start and goal checking for the validity of samples
-
-    double distance = 0;
-    int i,j;
-    for (j = 0; j < numofDOFs; j++){
-        if(distance < fabs(armstart_anglesV_rad[j] - armgoal_anglesV_rad[j]))
-            distance = fabs(armstart_anglesV_rad[j] - armgoal_anglesV_rad[j]);
+    else
+    {
+        ROS_INFO("No collision detected for the given joint configuration.");
+        return 1;
     }
-    int numofsamples = (int)(distance/(PI/20));
-    if(numofsamples < 2){
-        printf("the arm is already at the goal\n");
-        return;
-    }
-    *plan = (double**) malloc(numofsamples*sizeof(double*));
-    int firstinvalidconf = 1;
-    for (i = 0; i < numofsamples; i++){
-        (*plan)[i] = (double*) malloc(numofDOFs*sizeof(double)); 
-        for(j = 0; j < numofDOFs; j++){
-            (*plan)[i][j] = armstart_anglesV_rad[j] + ((double)(i)/(numofsamples-1))*(armgoal_anglesV_rad[j] - armstart_anglesV_rad[j]);
-        }
-        if(!IsValidArmConfiguration((*plan)[i], numofDOFs, map, x_size, y_size) && firstinvalidconf) {
-            firstinvalidconf = 1;
-            printf("ERROR: Invalid arm configuration!!!\n");
-        }
-    }
-    *planlength = numofsamples;
-    
-    return;
 }
 
 //*******************************************************************************************************************//
@@ -390,15 +168,25 @@ class RRTPlanner {
         vector<Node*> start_nodes;
         vector<Node*> goal_nodes;
 		double epsilon;
-	    double *map;
-    	int x_size;
-    	int y_size;
     	vector<double> start;
     	vector<double> goal;
     	int numofDOFs;
 
-		RRTPlanner(double epsilon, double* map, int x_size, int y_size, vector<double> start, vector<double> goal, int numofDOFs):
-			epsilon(epsilon), map(map), x_size(x_size), y_size(y_size), start(start), goal(goal), numofDOFs(numofDOFs) {}
+        // class attributes for kinematic_model and planning_scene
+        robot_model::RobotModelPtr kinematic_model_;
+        planning_scene::PlanningScenePtr planning_scene_;
+
+        // Constructor
+        RRTPlanner(double epsilon, vector<double> start, vector<double> goal, int numofDOFs)
+            : epsilon(epsilon), start(start), goal(goal), numofDOFs(numofDOFs) {
+            
+            // Initialize the MoveIt! robot model loader
+            robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+            kinematic_model_ = robot_model_loader.getModel();
+
+            // Initialize the MoveIt! planning scene using the class member
+            planning_scene_ = std::make_shared<planning_scene::PlanningScene>(kinematic_model_);
+        }
 
 		Node* nearestNeighbor(const Config& q, bool from_start = true);
         Node* nearestNeighborStar(const Config& q);
@@ -467,7 +255,7 @@ bool RRTPlanner::newConfig(const Node* qNear, const Config& q, Config& qNew) {
         }
 
         // if the configuration is valid, update qNew and mark advancement
-        if (IsValidArmConfiguration(config_arr, numofDOFs, map, x_size, y_size)) {
+        if (IsValidArmConfiguration(planning_scene_, kinematic_model_, config_arr)) {
             qNew = tempConfig;
             advancementMade = true;
         } else {
@@ -534,10 +322,6 @@ Node* RRTPlanner::buildRRT(int K) {
         if (biasProbability <= 0.1) {
             qRand = qGoal;
         } else {
-            // generate random configuration
-            // for (size_t i = 0; i < numofDOFs; i++) {
-                // qRand.values[i] = ((double) rand() / RAND_MAX) * 2 * M_PI; // random value between 0 and 2pi
-            // }
             qRand.values[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
             qRand.values[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
             qRand.values[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
@@ -577,14 +361,14 @@ void RRTPlanner::extractPath(Node* result, double ***plan, int *planlength) {
 }
 
 static void plannerRRT(
-    double *map,
-    int x_size,
-    int y_size,
     double *armstart_anglesV_rad,
     double *armgoal_anglesV_rad,
     int numofDOFs,
     double ***plan,
-    int *planlength)
+    int *planlength
+    // planning_scene::PlanningScene planning_scene,
+    // robot_model::RobotModelPtr kinematic_model
+    )
 {
     // start clock
     auto start_time = chrono::high_resolution_clock::now();
@@ -593,7 +377,7 @@ static void plannerRRT(
 	double epsilon = 0.1; 
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
-	RRTPlanner rrt(epsilon,map,x_size,y_size,start,goal,numofDOFs);
+	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
 
     // plan
     Node* result = rrt.buildRRT(100000);
@@ -709,9 +493,6 @@ pair<Node*, Node*> RRTPlanner::buildRRTConnect(int K) {
         if (biasProbability <= 0.1) { // 10% bias towards the goal or start
             qRand = from_start ? qGoal : qInit;
         } else {
-            // for (size_t i = 0; i < numofDOFs; i++) {
-            //     qRand.values[i] = ((double) rand() / RAND_MAX) * 2 * M_PI;
-            // }
             qRand.values[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
             qRand.values[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
             qRand.values[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
@@ -738,14 +519,14 @@ pair<Node*, Node*> RRTPlanner::buildRRTConnect(int K) {
 }
 
 static void plannerRRTConnect(
-    double *map,
-    int x_size,
-    int y_size,
     double *armstart_anglesV_rad,
     double *armgoal_anglesV_rad,
     int numofDOFs,
     double ***plan,
-    int *planlength)
+    int *planlength
+    // planning_scene::PlanningScene planning_scene,
+    // robot_model::RobotModelPtr kinematic_model
+    )
 {
     // start clock
     auto start_time = chrono::high_resolution_clock::now();
@@ -754,7 +535,7 @@ static void plannerRRTConnect(
 	double epsilon = 0.1;
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
-	RRTPlanner rrt(epsilon,map,x_size,y_size,start,goal,numofDOFs);
+	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
 
     // plan
 	auto result = rrt.buildRRTConnect(100000);
@@ -786,7 +567,6 @@ static void plannerRRTConnect(
     cout << "Path Quality: " << plan_quality << endl;
     cout << "Path Length: " << *planlength << endl;
 
-    
     return;
 }
 
@@ -897,10 +677,6 @@ Node* RRTPlanner::buildRRTStar(int K) {
         if (biasProbability <= 0.1) {
             qRand = qGoal;
         } else {
-            // renerate random configuration
-            // for (size_t i = 0; i < numofDOFs; i++) {
-                // qRand.values[i] = ((double) rand() / RAND_MAX) * 2 * M_PI; // random value between 0 and 2pi
-            // }
             qRand.values[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
             qRand.values[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
             qRand.values[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
@@ -918,14 +694,14 @@ Node* RRTPlanner::buildRRTStar(int K) {
 }
 
 static void plannerRRTStar(
-    double *map,
-    int x_size,
-    int y_size,
     double *armstart_anglesV_rad,
     double *armgoal_anglesV_rad,
     int numofDOFs,
     double ***plan,
-    int *planlength)
+    int *planlength
+    // planning_scene::PlanningScene planning_scene,
+    // robot_model::RobotModelPtr kinematic_model
+    )
 {
     // start clock
     auto start_time = chrono::high_resolution_clock::now();
@@ -934,7 +710,7 @@ static void plannerRRTStar(
 	double epsilon = 0.1;
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
-	RRTPlanner rrt(epsilon,map,x_size,y_size,start,goal,numofDOFs);
+	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
 
     // plan
 	Node* result = rrt.buildRRTStar(100000);
@@ -969,320 +745,42 @@ static void plannerRRTStar(
     return;
 }
 
-
-//*******************************************************************************************************************//
-//                                                                                                                   //
-//                                              PRM IMPLEMENTATION                                                   //
-//                                                                                                                   //
-//*******************************************************************************************************************//
-
-// interpolate between angles
-double* interpolate(double* start, 
-                    double* end, 
-                    double alpha,
-					int numofDOFs)
-{
-    double* intermediate = new double[numofDOFs];
-    for (int i = 0; i < numofDOFs; ++i) {
-        intermediate[i] = (1 - alpha) * start[i] + alpha * end[i];
-    }
-    return intermediate;
-}
-
-// check validity of an edge
-bool checkEdge( double* start, 
-			    double* end, 
-                int numofDOFs, 
-                int steps,
-				double* map,
-				int x_size,
-				int y_size)
-{
-    for (int i = 0; i <= steps; ++i) {
-        double alpha = static_cast<double>(i) / steps;
-        double* point = interpolate(start, end, alpha, numofDOFs);
-		if (!IsValidArmConfiguration(point, numofDOFs, map, x_size, y_size)){
-			return false;
-		}
-    }
-    return true;
-}
-
-// generate a random configuration
-double* randomConfig(int numofDOFs) {
-	double* config = new double[numofDOFs];
-    for (int i = 0; i < numofDOFs; ++i) {
-        config[i] = ((double) rand() / RAND_MAX) * 2 * M_PI;
-    }
-    return config;
-}
-
-// function to get euclidean distance between two joint configs
-double getDistance(double* a, double* b, int numofDOFs){
-	double sum = 0.0;
-	for (size_t i = 0; i < numofDOFs; ++i) {
-		double diff = abs(a[i] - b[i]);
-		double dist = min(diff, 2*M_PI-diff);
-		sum += dist*dist;
-	}
-	return sqrt(sum);
-}
-
-// get vertices in neighborhood
-vector<double*> getNeighbors(double neighborhood_size, double* vertex, unordered_map<int, double*> nodes, int numofDOFs){
-	vector<double*> neighbors;
-    for (const auto& n : nodes) {
-        if (getDistance(vertex, n.second, numofDOFs) <= neighborhood_size) {
-            neighbors.push_back(n.second);
-        }
-    }
-    return neighbors;
-}
-
-// add edge
-static void add_edge(unordered_map<int, unordered_set<int>>& edges, int alpha_i, int q_i){
-	// if alpha_i in edges, add edge to q_i
-    if (alpha_i == q_i){
-        return;
-    }
-    else if (edges.find(alpha_i) != edges.end()) {
-        edges[alpha_i].insert(q_i);
-    }
-	// add alpha_i to edges and add edge to q_i
-	else {
-        unordered_set<int> q_set = {q_i};
-        edges.insert(make_pair(alpha_i, q_set));
-    }
-
-    // add reverse order as well
-    if (edges.find(q_i) != edges.end()) {
-        edges[q_i].insert(alpha_i);
-    }
-	else {
-        unordered_set<int> q_set = {alpha_i};
-        edges.insert(make_pair(q_i, q_set));
-    }
-}
-
-// find closest node, add to nodes list, and add edge
-void connectClosest(double* vertex, unordered_map<int, double*>& nodes, int numofDOFs, unordered_map<int, unordered_set<int>>& edges, int index, bool start){
-    int i;
-    double min_dist = numeric_limits<double>::max();
-    for (const auto& n : nodes) {
-        double dist = getDistance(vertex, n.second, numofDOFs);
-        if (dist <= min_dist) {
-            min_dist = dist;
-            i = n.first;
-        }
-    }
-    if (start){
-        add_edge(edges,index,i);
-    }
-    else{
-        add_edge(edges,i,index);
-    }
-    
-    nodes.insert(make_pair(index, vertex));
-}
-
-// get index from node
-int getNodeIndex(const unordered_map<int, double*>& nodes, double* node){
-	for (const auto& n: nodes){
-		if (n.second == node){
-			return n.first;
-		}
-	}
-	cout << "node not found" << endl;
-	return -10; // node not found
-}
-
-struct AStarNode {
-    int index;
-    double cost; 
-    double heuristic;
-    int parent;
-};
-
-struct CompareAStarNode {
-    bool operator()(const AStarNode& n1, const AStarNode& n2) const {
-        return (n1.cost + n1.heuristic) > (n2.cost + n2.heuristic);
-    }
-};
-
-vector<int> searchGraph(int startIdx, 
-                        int goalIdx,
-                        unordered_map<int, unordered_set<int>>& edges,
-                        unordered_map<int, double*>& nodes,
-                        int numofDOFs) {
-    
-	priority_queue<AStarNode, vector<AStarNode>, CompareAStarNode> openList;
-    unordered_set<int> closedList;
-    unordered_map<int, AStarNode> parentMap;
-
-    openList.push({startIdx, 0, getDistance(nodes[startIdx], nodes[goalIdx], numofDOFs), -1});
-
-    while (!openList.empty()) {
-        AStarNode current = openList.top();
-        openList.pop();
-
-        if (current.index == goalIdx) {
-            cout << "FOUND GOAL" << endl;
-            // Backtrack and return the plan
-            vector<int> plan;
-            while (current.parent != -1) {
-                plan.push_back(current.index);
-                current = parentMap[current.parent];
-            }
-            plan.push_back(startIdx);
-            reverse(plan.begin(), plan.end());
-            return plan;
-        }
-
-        if (closedList.find(current.index) != closedList.end()) {
-            continue;
-        }
-
-        closedList.insert(current.index);
-        parentMap[current.index] = current;
-
-        for (int neighbor : edges[current.index]) {
-            if (closedList.find(neighbor) == closedList.end()) {
-                double newCost = current.cost + getDistance(nodes[current.index], nodes[neighbor], numofDOFs);
-                double heuristic = getDistance(nodes[neighbor], nodes[goalIdx], numofDOFs);
-                openList.push({neighbor, newCost, heuristic, current.index});
-            }
-        }
-    }
-
-    return {}; // return an empty plan if no path is found
-}
-
-static void plannerPRM(
-    double *map,
-    int x_size,
-    int y_size,
-    double *armstart_anglesV_rad,
-    double *armgoal_anglesV_rad,
-    int numofDOFs,
-    double ***plan,
-    int *planlength)
-{
-
-    // start clock
-    auto start_time = chrono::high_resolution_clock::now();
-
-    // initialize values
-	int steps = 20;
-	double neighborhood_size = 20;
-	unordered_map<int, unordered_set<int>> edges;
-	unordered_map<int, double*> nodes;
-	int i = 0;
-
-    // build graph
-	while (i < 1000){
-
-		// get random vertex
-		double* alpha = randomConfig(numofDOFs);
-
-		// add vertex to graph if in Cfree
-		if (IsValidArmConfiguration(alpha, numofDOFs, map, x_size, y_size)){
-			nodes.insert(make_pair(i, alpha));
-
-			// check neighborhood for points
-			vector<double*> neighbors = getNeighbors(neighborhood_size, alpha, nodes, numofDOFs);
-
-			// add edges
-    		for (const auto& q : neighbors) {
-				if (checkEdge(alpha, q, numofDOFs, steps, map, x_size, y_size)){
-					int q_i = getNodeIndex(nodes, q);
-                    if (edges[i].size() < 10){
-                        add_edge(edges, q_i, i);
-                    }
-				}
-			}
-			i++;
-		}
-	}
-
-    // connect closest nodes to start and goal
-    int startIdx = i+1;
-    int goalIdx = i+2;
-    connectClosest(armstart_anglesV_rad, nodes, numofDOFs, edges, startIdx, true);
-    connectClosest(armgoal_anglesV_rad, nodes, numofDOFs, edges, goalIdx, false);
-
-    // search graph using A*
-    vector<int> pathIndices = searchGraph(startIdx, goalIdx, edges, nodes, numofDOFs);
-
-    // planning time
-    auto plan_end = chrono::high_resolution_clock::now();
-    auto planning_time = chrono::duration_cast<chrono::milliseconds>(plan_end - start_time);
-
-    // populate plan
-    if (!pathIndices.empty()) {
-        *planlength = pathIndices.size();
-        *plan = (double**) malloc(*planlength * sizeof(double*));
-        
-        for (int i = 0; i < *planlength; ++i) {
-            (*plan)[i] = nodes[pathIndices[i]];
-        }
-    }
-	else {
-        cout << "Failed to find a path." << endl;
-    }
-
-    // full solution time
-    auto end_time = chrono::high_resolution_clock::now();
-    auto total_time = chrono::duration_cast<chrono::milliseconds>(end_time - start_time);
-
-    // planner metrics
-    string under_five = (total_time.count() < 5000) ? "Yes" : "No";
-    double plan_quality = getPlanQuality(plan, planlength, numofDOFs);
-    cout << "Algorithm: PRM" << endl;
-    cout << "Degrees of Freedom: " << numofDOFs << endl;
-    cout << "Planning Time: " << planning_time.count() << " milliseconds" << endl;
-    cout << "Generated Solution in Under Five Seconds: " << under_five << endl;
-    cout << "Nodes Generated: " << nodes.size() << endl;
-    cout << "Path Quality: " << plan_quality << endl;
-    cout << "Path Length: " << *planlength << endl;
-
-}
-
-
 //*******************************************************************************************************************//
 //                                                                                                                   //
 //                                                MAIN FUNCTION                                                      //
 //                                                                                                                   //
 //*******************************************************************************************************************//
 
-/** Your final solution will be graded by an grading script which will
- * send the default 6 arguments:
- *    map, numOfDOFs, commaSeparatedStartPos, commaSeparatedGoalPos, 
- *    whichPlanner, outputFilePath
- * An example run after compiling and getting the planner.out executable
- * >> ./planner.out map1.txt 5 1.57,0.78,1.57,0.78,1.57 0.392,2.35,3.14,2.82,4.71 0 output.txt
- * See the hw handout for full information.
- * If you modify this for testing (e.g. to try out different hyper-parameters),
- * make sure it can run with the original 6 commands.
- * Programs that do not will automatically get a 0.
- * */
 int main(int argc, char** argv) {
-	double* map;
-	int x_size, y_size;
+
+    ros::init(argc, argv, "planner_node");
+    ros::NodeHandle nh;
+
+    // Load the robot model
+    robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
+    robot_model::RobotModelPtr kinematic_model = robot_model_loader.getModel();
+    planning_scene::PlanningScenePtr planning_scene;
+    planning_scene = std::make_shared<planning_scene::PlanningScene>(kinematic_model);
+
     srand(time(NULL));
 
-	tie(map, x_size, y_size) = loadMap(argv[1]);
-	const int numOfDOFs = std::stoi(argv[2]);
-	double* startPos = doubleArrayFromString(argv[3]);
-	double* goalPos = doubleArrayFromString(argv[4]);
-	int whichPlanner = std::stoi(argv[5]);
-	string outputFile = argv[6];
+	int numOfDOFs;
+    int whichPlanner;
+    string outputFile;
+    string start_pos_str;
+    string goal_pos_str;
 
-    // find a random valid start and goal position (only need this section for the write up)
+    nh.param("num_of_dofs", numOfDOFs);
+    nh.param("output_file", outputFile);
+    nh.param("planner_type", whichPlanner);
+    nh.param("start_position", start_pos_str);
+    nh.param("goal_position", goal_pos_str);
+
+    double* startPos = doubleArrayFromString(start_pos_str);
+    double* goalPos = doubleArrayFromString(goal_pos_str);
+
+    // find a random valid start and goal position //todo: update this to our desired and final goal
     while(true){
-        // for (size_t i = 0; i < numOfDOFs; i++) {
-        //     startPos[i] = ((double) rand() / RAND_MAX) * 2 * M_PI;
-        //     goalPos[i] = ((double) rand() / RAND_MAX) * 2 * M_PI;   
-        // }
         startPos[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
         startPos[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
         startPos[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
@@ -1297,7 +795,7 @@ int main(int argc, char** argv) {
         goalPos[4] = ((double) rand() / RAND_MAX) * -4.6 + 3; // -1.6 to 3.0
         goalPos[5] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
 
-        if( IsValidArmConfiguration(startPos, numOfDOFs, map, x_size, y_size) && IsValidArmConfiguration(goalPos, numOfDOFs, map, x_size, y_size) ){
+        if( IsValidArmConfiguration(planning_scene, kinematic_model, startPos) && IsValidArmConfiguration(planning_scene, kinematic_model, goalPos) ){
             break;
         }
     }
@@ -1311,37 +809,26 @@ int main(int argc, char** argv) {
     }
 
 
-	if(!IsValidArmConfiguration(startPos, numOfDOFs, map, x_size, y_size)||
-			!IsValidArmConfiguration(goalPos, numOfDOFs, map, x_size, y_size)) {
+	if(!IsValidArmConfiguration(planning_scene, kinematic_model, startPos)||
+			!IsValidArmConfiguration(planning_scene, kinematic_model, goalPos)) {
 		throw runtime_error("Invalid start or goal configuration!\n");
 	}
-
-	///////////////////////////////////////
-	//// Feel free to modify anything below. Be careful modifying anything above.
 
 	double** plan = NULL;
 	int planlength = 0;
 
     // Call the corresponding planner function
-    if (whichPlanner == PRM)
+    if (whichPlanner == RRT)
     {
-        plannerPRM(map, x_size, y_size, startPos, goalPos, numOfDOFs, &plan, &planlength);
-    }
-    else if (whichPlanner == RRT)
-    {
-        plannerRRT(map, x_size, y_size, startPos, goalPos, numOfDOFs, &plan, &planlength);
+        plannerRRT(startPos, goalPos, numOfDOFs, &plan, &planlength);
     }
     else if (whichPlanner == RRTCONNECT)
     {
-        plannerRRTConnect(map, x_size, y_size, startPos, goalPos, numOfDOFs, &plan, &planlength);
+        plannerRRTConnect(startPos, goalPos, numOfDOFs, &plan, &planlength);
     }
     else if (whichPlanner == RRTSTAR)
     {
-        plannerRRTStar(map, x_size, y_size, startPos, goalPos, numOfDOFs, &plan, &planlength);
-    }
-    else
-    {
-        planner(map, x_size, y_size, startPos, goalPos, numOfDOFs, &plan, &planlength);
+        plannerRRTStar(startPos, goalPos, numOfDOFs, &plan, &planlength);
     }
 
 	//// Feel free to modify anything above.
@@ -1349,23 +836,19 @@ int main(int argc, char** argv) {
 	//// grading script will not work and you will recieve a 0.
 	///////////////////////////////////////
 
-    // Your solution's path should start with startPos and end with goalPos
+    // The solution's path should start with startPos and end with goalPos
     if (!equalDoubleArrays(plan[0], startPos, numOfDOFs) || 
     	!equalDoubleArrays(plan[planlength-1], goalPos, numOfDOFs)) {
 		throw std::runtime_error("Start or goal position not matching");
 	}
 
-	/** Saves the solution to output file
-	 * Do not modify the output log file output format as it is required for visualization
-	 * and for grading.
-	 */
+	// Saves the solution to output file
 	std::ofstream m_log_fstream;
 	m_log_fstream.open(outputFile, std::ios::trunc); // Creates new or replaces existing file
 	if (!m_log_fstream.is_open()) {
 		throw std::runtime_error("Cannot open file");
 	}
-	// m_log_fstream << argv[1] << endl; // Write out map name first
-	/// Then write out all the joint angles in the plan sequentially
+	/// write out all the joint angles in the plan sequentially
 	for (int i = 0; i < planlength; ++i) {
 		for (int k = 0; k < numOfDOFs; ++k) {
 			m_log_fstream << plan[i][k] << ",";

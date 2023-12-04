@@ -43,17 +43,17 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/planner_node.pc")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig" TYPE FILE FILES "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/planner.pc")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/planner_node/cmake" TYPE FILE FILES
-    "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/planner_nodeConfig.cmake"
-    "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/planner_nodeConfig-version.cmake"
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/planner/cmake" TYPE FILE FILES
+    "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/plannerConfig.cmake"
+    "/home/sridevi/Documents/GetABottle.AI/build/planner_node/catkin_generated/installspace/plannerConfig-version.cmake"
     )
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "Unspecified" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/planner_node" TYPE FILE FILES "/home/sridevi/Documents/GetABottle.AI/src/planner_node/package.xml")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/share/planner" TYPE FILE FILES "/home/sridevi/Documents/GetABottle.AI/src/planner_node/package.xml")
 endif()
 

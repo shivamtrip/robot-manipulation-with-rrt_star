@@ -66,7 +66,6 @@ CMAKE_BINARY_DIR = /home/sridevi/Documents/GetABottle.AI/build
 all: gtest/all
 all: control_node/all
 all: xarm_ros/examples/multi_xarm5/all
-all: planner_node/all
 all: xarm_ros/xarm_bringup/all
 all: xarm_ros/xarm_description/all
 all: xarm_ros/dual_xarm6_moveit_config/all
@@ -85,6 +84,7 @@ all: xarm_ros/xarm_msgs/all
 all: xarm_ros/xarm_sdk/all
 all: xarm_ros/xarm_vision/camera_demo/all
 all: collision_check/all
+all: planner_node/all
 all: xarm_ros/examples/xarm7_redundancy_res/all
 all: xarm_ros/xarm_api/all
 all: xarm_ros/examples/run_recorded_traj/all
@@ -100,7 +100,6 @@ all: xarm_ros/xarm_vision/d435i_xarm_setup/all
 preinstall: gtest/preinstall
 preinstall: control_node/preinstall
 preinstall: xarm_ros/examples/multi_xarm5/preinstall
-preinstall: planner_node/preinstall
 preinstall: xarm_ros/xarm_bringup/preinstall
 preinstall: xarm_ros/xarm_description/preinstall
 preinstall: xarm_ros/dual_xarm6_moveit_config/preinstall
@@ -119,6 +118,7 @@ preinstall: xarm_ros/xarm_msgs/preinstall
 preinstall: xarm_ros/xarm_sdk/preinstall
 preinstall: xarm_ros/xarm_vision/camera_demo/preinstall
 preinstall: collision_check/preinstall
+preinstall: planner_node/preinstall
 preinstall: xarm_ros/examples/xarm7_redundancy_res/preinstall
 preinstall: xarm_ros/xarm_api/preinstall
 preinstall: xarm_ros/examples/run_recorded_traj/preinstall
@@ -139,7 +139,6 @@ clean: CMakeFiles/doxygen.dir/clean
 clean: gtest/clean
 clean: control_node/clean
 clean: xarm_ros/examples/multi_xarm5/clean
-clean: planner_node/clean
 clean: xarm_ros/xarm_bringup/clean
 clean: xarm_ros/xarm_description/clean
 clean: xarm_ros/dual_xarm6_moveit_config/clean
@@ -158,6 +157,7 @@ clean: xarm_ros/xarm_msgs/clean
 clean: xarm_ros/xarm_sdk/clean
 clean: xarm_ros/xarm_vision/camera_demo/clean
 clean: collision_check/clean
+clean: planner_node/clean
 clean: xarm_ros/examples/xarm7_redundancy_res/clean
 clean: xarm_ros/xarm_api/clean
 clean: xarm_ros/examples/run_recorded_traj/clean
@@ -324,7 +324,7 @@ gtest/googletest/clean: gtest/googletest/CMakeFiles/gtest_main.dir/clean
 # Directory level rules for directory planner_node
 
 # Recursive "all" directory target.
-planner_node/all:
+planner_node/all: planner_node/CMakeFiles/planner_node.dir/all
 .PHONY : planner_node/all
 
 # Recursive "preinstall" directory target.
@@ -332,7 +332,7 @@ planner_node/preinstall:
 .PHONY : planner_node/preinstall
 
 # Recursive "clean" directory target.
-planner_node/clean:
+planner_node/clean: planner_node/CMakeFiles/planner_node.dir/clean
 .PHONY : planner_node/clean
 
 #=============================================================================
@@ -2634,7 +2634,7 @@ xarm_ros/xarm_msgs/CMakeFiles/xarm_msgs_genpy.dir/clean:
 xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/all: control_node/CMakeFiles/_catkin_empty_exported_target.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/build.make xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/build.make xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=13,14,15,16,17,18,19,20,21,22 "Built target xarm_cxx_sdk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=14,15,16,17,18,19,20,21,22,23 "Built target xarm_cxx_sdk"
 .PHONY : xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/all
 
 # Build rule for subdir invocation for target.
@@ -4838,6 +4838,32 @@ collision_check/CMakeFiles/collision_check_node.dir/clean:
 .PHONY : collision_check/CMakeFiles/collision_check_node.dir/clean
 
 #=============================================================================
+# Target rules for target planner_node/CMakeFiles/planner_node.dir
+
+# All Build rule for target.
+planner_node/CMakeFiles/planner_node.dir/all:
+	$(MAKE) $(MAKESILENT) -f planner_node/CMakeFiles/planner_node.dir/build.make planner_node/CMakeFiles/planner_node.dir/depend
+	$(MAKE) $(MAKESILENT) -f planner_node/CMakeFiles/planner_node.dir/build.make planner_node/CMakeFiles/planner_node.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target planner_node"
+.PHONY : planner_node/CMakeFiles/planner_node.dir/all
+
+# Build rule for subdir invocation for target.
+planner_node/CMakeFiles/planner_node.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 planner_node/CMakeFiles/planner_node.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
+.PHONY : planner_node/CMakeFiles/planner_node.dir/rule
+
+# Convenience name for target.
+planner_node: planner_node/CMakeFiles/planner_node.dir/rule
+.PHONY : planner_node
+
+# clean rule for target.
+planner_node/CMakeFiles/planner_node.dir/clean:
+	$(MAKE) $(MAKESILENT) -f planner_node/CMakeFiles/planner_node.dir/build.make planner_node/CMakeFiles/planner_node.dir/clean
+.PHONY : planner_node/CMakeFiles/planner_node.dir/clean
+
+#=============================================================================
 # Target rules for target xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_cpp.dir
 
 # All Build rule for target.
@@ -5029,12 +5055,12 @@ xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/all: xarm_ros/xarm_sdk/CMakeFi
 xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/all: xarm_ros/xarm_api/CMakeFiles/xarm_ros_driver.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/build.make xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/build.make xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=23 "Built target xarm_driver_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_driver_node"
 .PHONY : xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 21
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_api/CMakeFiles/xarm_driver_node.dir/rule
@@ -5110,7 +5136,7 @@ xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/all: xarm_ros/xarm_msgs/CM
 xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/all: xarm_ros/xarm_sdk/CMakeFiles/xarm_cxx_sdk.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/build.make xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/build.make xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=8 "Built target servo_cartesian_test"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=9 "Built target servo_cartesian_test"
 .PHONY : xarm_ros/xarm_api/CMakeFiles/servo_cartesian_test.dir/all
 
 # Build rule for subdir invocation for target.
@@ -5138,12 +5164,12 @@ xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/all: xarm_ros/xarm_sdk/CMakeFi
 xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/all: xarm_ros/xarm_api/CMakeFiles/xarm_ros_client.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=9 "Built target test_tool_modbus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target test_tool_modbus"
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 21
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_tool_modbus.dir/rule
@@ -5166,12 +5192,12 @@ xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/all: xarm_ros/xarm_sdk/CMa
 xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/all: xarm_ros/xarm_api/CMakeFiles/xarm_ros_client.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target test_xarm_ros_client"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=10 "Built target test_xarm_ros_client"
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 21
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 22
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_xarm_ros_client.dir/rule
@@ -5222,12 +5248,12 @@ xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/all: xarm_ros/xarm_sdk/CMakeFi
 xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/all: xarm_ros/xarm_api/CMakeFiles/xarm_ros_client.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/build.make xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=10 "Built target test_xarm_states"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target test_xarm_states"
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 21
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_api/CMakeFiles/test_xarm_states.dir/rule
@@ -5631,12 +5657,12 @@ xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all: xarm_ros/xarm_controller/CM
 xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_hw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=36 "Built target xarm_hw"
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 65
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 66
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/rule
@@ -5727,7 +5753,7 @@ xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/all: xarm_ros/xarm_cont
 xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/all: xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=12 "Built target xarm_combined_hw"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_combined_hw"
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/all
 
 # Build rule for subdir invocation for target.
@@ -5755,12 +5781,12 @@ xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/all: xarm_ros/xarm_api/CMa
 xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/all: xarm_ros/xarm_api/CMakeFiles/xarm_ros_client.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/build.make xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/build.make xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target sample_motion"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=8 "Built target sample_motion"
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 22
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 23
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/sample_motion.dir/rule
@@ -5784,12 +5810,12 @@ xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/all: xarm_ros/xarm_api
 xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/all: xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/build.make xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/build.make xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target uf_ros_controller"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=12 "Built target uf_ros_controller"
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 65
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 67
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/uf_ros_controller.dir/rule
@@ -5814,12 +5840,12 @@ xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/all: xarm_
 xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/all: xarm_ros/xarm_controller/CMakeFiles/xarm_combined_hw.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/build.make xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_combined_traj_controller"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=13 "Built target xarm_combined_traj_controller"
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 66
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 67
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_combined_traj_controller.dir/rule
@@ -5849,7 +5875,7 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages.dir/all: xarm_ro
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 11
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 12
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages.dir/rule
@@ -6120,12 +6146,12 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/all: xar
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/all: xarm_ros/xarm_gripper/CMakeFiles/_xarm_gripper_generate_messages_check_deps_MoveFeedback.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=26,27 "Built target xarm_gripper_generate_messages_eus"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=26,27,28 "Built target xarm_gripper_generate_messages_eus"
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_eus.dir/rule
@@ -6151,7 +6177,7 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_geneus.dir/all: xarm_ros/xarm_grip
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_geneus.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_geneus.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_geneus.dir/rule
@@ -6180,12 +6206,12 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/all: xa
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/all: xarm_ros/xarm_gripper/CMakeFiles/_xarm_gripper_generate_messages_check_deps_MoveFeedback.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=28,29,30 "Built target xarm_gripper_generate_messages_lisp"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=29,30 "Built target xarm_gripper_generate_messages_lisp"
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_lisp.dir/rule
@@ -6211,7 +6237,7 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genlisp.dir/all: xarm_ros/xarm_gri
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genlisp.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genlisp.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genlisp.dir/rule
@@ -6300,12 +6326,12 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/all: xarm
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/all: xarm_ros/xarm_gripper/CMakeFiles/_xarm_gripper_generate_messages_check_deps_MoveFeedback.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/build.make xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=33,34 "Built target xarm_gripper_generate_messages_py"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=33,34,35 "Built target xarm_gripper_generate_messages_py"
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_generate_messages_py.dir/rule
@@ -6331,7 +6357,7 @@ xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genpy.dir/all: xarm_ros/xarm_gripp
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genpy.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 2
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 3
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genpy.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_gripper/CMakeFiles/xarm_gripper_genpy.dir/rule
@@ -6500,12 +6526,12 @@ xarm_ros/xarm_gripper/CMakeFiles/gripper_client.dir/clean:
 xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/all:
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/build.make xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/build.make xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=36 "Built target xarm_joy_to_servo_node"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_joy_to_servo_node"
 .PHONY : xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 1
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_moveit_servo/CMakeFiles/xarm_joy_to_servo_node.dir/rule
@@ -7166,12 +7192,12 @@ xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/all: xarm_ros/xarm_pla
 xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/all: xarm_ros/xarm_planner/CMakeFiles/xarm_planner_generate_messages_py.dir/all
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/build.make xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/depend
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/build.make xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num=35 "Built target xarm_gripper_planner"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/sridevi/Documents/GetABottle.AI/build/CMakeFiles --progress-num= "Built target xarm_gripper_planner"
 .PHONY : xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/all
 
 # Build rule for subdir invocation for target.
 xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 7
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/sridevi/Documents/GetABottle.AI/build/CMakeFiles 0
 .PHONY : xarm_ros/xarm_planner/CMakeFiles/xarm_gripper_planner.dir/rule

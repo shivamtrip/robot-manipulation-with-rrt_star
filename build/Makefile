@@ -2057,6 +2057,19 @@ collision_check_node/fast:
 .PHONY : collision_check_node/fast
 
 #=============================================================================
+# Target rules for targets named planner_node
+
+# Build rule for target.
+planner_node: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 planner_node
+.PHONY : planner_node
+
+# fast build rule for target.
+planner_node/fast:
+	$(MAKE) $(MAKESILENT) -f planner_node/CMakeFiles/planner_node.dir/build.make planner_node/CMakeFiles/planner_node.dir/build
+.PHONY : planner_node/fast
+
+#=============================================================================
 # Target rules for targets named control_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -3314,6 +3327,7 @@ help:
 	@echo "... gtest_main"
 	@echo "... move_test"
 	@echo "... obj2base"
+	@echo "... planner_node"
 	@echo "... sample_motion"
 	@echo "... servo_cartesian_test"
 	@echo "... test_tool_modbus"
