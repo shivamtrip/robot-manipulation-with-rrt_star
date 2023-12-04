@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/devel
+
+Name: d435i_xarm_setup
+Description: Description of d435i_xarm_setup
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: sensor_msgs std_msgs xarm_planner xarm_msgs xarm_api

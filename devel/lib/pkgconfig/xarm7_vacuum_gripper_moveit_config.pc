@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/devel
+
+Name: xarm7_vacuum_gripper_moveit_config
+Description: Description of xarm7_vacuum_gripper_moveit_config
+Version: 0.3.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

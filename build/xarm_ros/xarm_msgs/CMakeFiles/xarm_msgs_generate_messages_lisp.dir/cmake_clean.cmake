@@ -1,0 +1,42 @@
+file(REMOVE_RECURSE
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/msg/CIOState.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/msg/IOState.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/msg/RobotMsg.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/Call.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/ClearErr.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/ConfigToolModbus.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/FtCaliLoad.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/FtIdenLoad.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetAnalogIO.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetControllerDigitalIO.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetDigitalIO.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetErr.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetFloat32List.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetInt32.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GetSetModbusData.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GripperConfig.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GripperMove.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/GripperState.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/Move.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/MoveAxisAngle.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/MoveVelo.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/MoveVelocity.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/PlayTraj.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetAxis.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetControllerAnalogIO.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetDigitalIO.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetFloat32.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetInt16.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetLoad.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetModbusTimeout.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetMultipleInts.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetString.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/SetToolModbus.lisp"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/common-lisp/ros/xarm_msgs/srv/TCPOffset.lisp"
+  "CMakeFiles/xarm_msgs_generate_messages_lisp"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/xarm_msgs_generate_messages_lisp.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

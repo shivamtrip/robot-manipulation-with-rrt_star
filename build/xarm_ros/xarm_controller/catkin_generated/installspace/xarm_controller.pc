@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/install
+
+Name: xarm_controller
+Description: Description of xarm_controller
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lxarm_hw
+Requires: combined_robot_hw controller_manager joint_state_controller robot_state_publisher xarm_api

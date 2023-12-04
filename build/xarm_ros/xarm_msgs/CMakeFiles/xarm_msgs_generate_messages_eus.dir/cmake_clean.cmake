@@ -1,0 +1,43 @@
+file(REMOVE_RECURSE
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/manifest.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/msg/CIOState.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/msg/IOState.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/msg/RobotMsg.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/Call.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/ClearErr.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/ConfigToolModbus.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/FtCaliLoad.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/FtIdenLoad.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetAnalogIO.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetControllerDigitalIO.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetDigitalIO.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetErr.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetFloat32List.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetInt32.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GetSetModbusData.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GripperConfig.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GripperMove.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/GripperState.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/Move.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/MoveAxisAngle.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/MoveVelo.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/MoveVelocity.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/PlayTraj.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetAxis.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetControllerAnalogIO.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetDigitalIO.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetFloat32.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetInt16.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetLoad.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetModbusTimeout.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetMultipleInts.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetString.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/SetToolModbus.l"
+  "/home/sridevi/Documents/GetABottle.AI/devel/share/roseus/ros/xarm_msgs/srv/TCPOffset.l"
+  "CMakeFiles/xarm_msgs_generate_messages_eus"
+)
+
+# Per-language clean rules from dependency scanning.
+foreach(lang )
+  include(CMakeFiles/xarm_msgs_generate_messages_eus.dir/cmake_clean_${lang}.cmake OPTIONAL)
+endforeach()

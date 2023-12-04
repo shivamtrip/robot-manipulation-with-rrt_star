@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/install
+
+Name: xarm_moveit_servo
+Description: Description of xarm_moveit_servo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/install
+
+Name: xarm_api
+Description: Description of xarm_api
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lxarm_ros_driver -lxarm_ros_client
+Requires: roscpp std_msgs actionlib actionlib_msgs control_msgs xarm_sdk xarm_msgs

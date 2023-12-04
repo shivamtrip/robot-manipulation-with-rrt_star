@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/install
+
+Name: collision_check
+Description: Description of collision_check
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp

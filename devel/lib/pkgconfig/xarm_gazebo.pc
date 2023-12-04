@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/devel
+
+Name: xarm_gazebo
+Description: Description of xarm_gazebo
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

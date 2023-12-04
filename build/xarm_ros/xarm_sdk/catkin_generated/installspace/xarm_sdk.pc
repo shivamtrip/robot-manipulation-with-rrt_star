@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/install
+
+Name: xarm_sdk
+Description: Description of xarm_sdk
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib -lxarm_cxx_sdk
+Requires: 

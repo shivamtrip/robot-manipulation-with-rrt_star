@@ -1,0 +1,8 @@
+prefix=/home/sridevi/Documents/GetABottle.AI/devel
+
+Name: run_recorded_traj
+Description: Description of run_recorded_traj
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
