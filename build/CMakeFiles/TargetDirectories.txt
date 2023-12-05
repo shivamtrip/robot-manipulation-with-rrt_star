@@ -361,6 +361,13 @@
 /home/sridevi/Documents/GetABottle.AI/build/roboticsgroup_upatras_gazebo_plugins/CMakeFiles/install.dir
 /home/sridevi/Documents/GetABottle.AI/build/roboticsgroup_upatras_gazebo_plugins/CMakeFiles/install/local.dir
 /home/sridevi/Documents/GetABottle.AI/build/roboticsgroup_upatras_gazebo_plugins/CMakeFiles/install/strip.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/test.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/edit_cache.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/rebuild_cache.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/list_install_components.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/install.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/install/local.dir
+/home/sridevi/Documents/GetABottle.AI/build/spawn_object/CMakeFiles/install/strip.dir
 /home/sridevi/Documents/GetABottle.AI/build/xarm_ros/examples/xarm7_redundancy_res/CMakeFiles/test.dir
 /home/sridevi/Documents/GetABottle.AI/build/xarm_ros/examples/xarm7_redundancy_res/CMakeFiles/edit_cache.dir
 /home/sridevi/Documents/GetABottle.AI/build/xarm_ros/examples/xarm7_redundancy_res/CMakeFiles/rebuild_cache.dir

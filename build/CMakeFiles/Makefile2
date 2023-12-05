@@ -88,6 +88,7 @@ all: collision_check/all
 all: planner_node/all
 all: roboticsgroup_gazebo_plugins/all
 all: roboticsgroup_upatras_gazebo_plugins/all
+all: spawn_object/all
 all: xarm_ros/examples/xarm7_redundancy_res/all
 all: xarm_ros/xarm_api/all
 all: xarm_ros/examples/run_recorded_traj/all
@@ -125,6 +126,7 @@ preinstall: collision_check/preinstall
 preinstall: planner_node/preinstall
 preinstall: roboticsgroup_gazebo_plugins/preinstall
 preinstall: roboticsgroup_upatras_gazebo_plugins/preinstall
+preinstall: spawn_object/preinstall
 preinstall: xarm_ros/examples/xarm7_redundancy_res/preinstall
 preinstall: xarm_ros/xarm_api/preinstall
 preinstall: xarm_ros/examples/run_recorded_traj/preinstall
@@ -167,6 +169,7 @@ clean: collision_check/clean
 clean: planner_node/clean
 clean: roboticsgroup_gazebo_plugins/clean
 clean: roboticsgroup_upatras_gazebo_plugins/clean
+clean: spawn_object/clean
 clean: xarm_ros/examples/xarm7_redundancy_res/clean
 clean: xarm_ros/xarm_api/clean
 clean: xarm_ros/examples/run_recorded_traj/clean
@@ -409,6 +412,21 @@ roboticsgroup_upatras_gazebo_plugins/preinstall:
 roboticsgroup_upatras_gazebo_plugins/clean: roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_mimic_joint_plugin.dir/clean
 roboticsgroup_upatras_gazebo_plugins/clean: roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_disable_link_plugin.dir/clean
 .PHONY : roboticsgroup_upatras_gazebo_plugins/clean
+
+#=============================================================================
+# Directory level rules for directory spawn_object
+
+# Recursive "all" directory target.
+spawn_object/all:
+.PHONY : spawn_object/all
+
+# Recursive "preinstall" directory target.
+spawn_object/preinstall:
+.PHONY : spawn_object/preinstall
+
+# Recursive "clean" directory target.
+spawn_object/clean:
+.PHONY : spawn_object/clean
 
 #=============================================================================
 # Directory level rules for directory xarm_ros/dual_xarm6_moveit_config

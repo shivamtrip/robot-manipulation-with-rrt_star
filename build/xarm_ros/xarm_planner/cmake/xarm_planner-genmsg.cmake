@@ -19,7 +19,7 @@ add_custom_target(xarm_planner_generate_messages ALL)
 
 get_filename_component(_filename "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv" NAME_WE)
 add_custom_target(_xarm_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "xarm_planner" "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv" "geometry_msgs/Pose:geometry_msgs/Point:geometry_msgs/Quaternion"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "xarm_planner" "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv" "geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/Point"
 )
 
 get_filename_component(_filename "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/joint_plan.srv" NAME_WE)
@@ -34,7 +34,7 @@ add_custom_target(_xarm_planner_generate_messages_check_deps_${_filename}
 
 get_filename_component(_filename "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv" NAME_WE)
 add_custom_target(_xarm_planner_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "xarm_planner" "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv" "geometry_msgs/Pose:geometry_msgs/Point:geometry_msgs/Quaternion"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "xarm_planner" "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv" "geometry_msgs/Pose:geometry_msgs/Quaternion:geometry_msgs/Point"
 )
 
 #
@@ -48,7 +48,7 @@ add_custom_target(_xarm_planner_generate_messages_check_deps_${_filename}
 _generate_srv_cpp(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/xarm_planner
 )
 _generate_srv_cpp(xarm_planner
@@ -66,7 +66,7 @@ _generate_srv_cpp(xarm_planner
 _generate_srv_cpp(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/xarm_planner
 )
 
@@ -105,7 +105,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS xarm_planner_generate_messages_cpp)
 _generate_srv_eus(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/xarm_planner
 )
 _generate_srv_eus(xarm_planner
@@ -123,7 +123,7 @@ _generate_srv_eus(xarm_planner
 _generate_srv_eus(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/xarm_planner
 )
 
@@ -162,7 +162,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS xarm_planner_generate_messages_eus)
 _generate_srv_lisp(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/xarm_planner
 )
 _generate_srv_lisp(xarm_planner
@@ -180,7 +180,7 @@ _generate_srv_lisp(xarm_planner
 _generate_srv_lisp(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/xarm_planner
 )
 
@@ -219,7 +219,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS xarm_planner_generate_messages_lisp
 _generate_srv_nodejs(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/xarm_planner
 )
 _generate_srv_nodejs(xarm_planner
@@ -237,7 +237,7 @@ _generate_srv_nodejs(xarm_planner
 _generate_srv_nodejs(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/xarm_planner
 )
 
@@ -276,7 +276,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS xarm_planner_generate_messages_node
 _generate_srv_py(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/pose_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/xarm_planner
 )
 _generate_srv_py(xarm_planner
@@ -294,7 +294,7 @@ _generate_srv_py(xarm_planner
 _generate_srv_py(xarm_planner
   "/home/sridevi/Documents/GetABottle.AI/src/xarm_ros/xarm_planner/srv/single_straight_plan.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg"
+  "/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Pose.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Quaternion.msg;/opt/ros/noetic/share/geometry_msgs/cmake/../msg/Point.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/xarm_planner
 )
 

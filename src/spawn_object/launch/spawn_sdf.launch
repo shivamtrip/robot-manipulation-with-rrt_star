@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="name" default="beer"/>
+    <arg name="x" default="0.277426"/>
+    <arg name="y" default="-0.583480"/>
+    <arg name="z" default="0.965000"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+    <arg name="model" default="$(find spawn_object)/media/beer/model.sdf"/>
+    <node name="beer_spawn_sdf" pkg="gazebo_ros" type="spawn_model" 
+    args="-sdf -file $(arg model) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg name)" />
+</launch>

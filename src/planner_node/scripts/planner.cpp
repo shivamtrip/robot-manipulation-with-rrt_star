@@ -317,6 +317,7 @@ bool RRTPlanner::newConfig(const Node* qNear, const Config& q, Config& qNew) {
     dist = sqrt(dist);
 
     double stepSize = min(epsilon, dist) / dist;  // scaling factor
+    // double stepSize = 0.1;
     bool advancementMade = false;
 
     // interpolate from qNear towards q and check for collisions
@@ -927,8 +928,6 @@ int main(int argc, char** argv) {
     string outputFile = "output.txt";
     // string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0";
     string start_pos_str = "0,-29,-31,0,61,0";
-    // string goal_pos_str = "-87,26,-47,-88,93,-21"; goal
-    // string goal_pos_str = "-138,5,-43,-132,61,-25";
     string goal_pos_str = "-135,32,-48,-135,77,-9";
 
     double* startPos = doubleArrayFromString(start_pos_str); // convert to arr and convert to radians
@@ -1021,10 +1020,12 @@ int main(int argc, char** argv) {
 
     traj_publisher.publish(joint_goal);
 
+    ros::Duration(10.0).sleep();
+
     while (ros::ok()) {
-        // Add any additional code here related to action client, if needed
-        // e.g., using SimpleActionClient to send the goal
         loop_rate.sleep();
     }
+
+
 
 }

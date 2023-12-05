@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="world" default="$(optenv ASTROBEE_WORLD iss)" />
+    <arg name="name" default="grey_box"/>
+    <arg name="x" default="10.7"/>
+    <arg name="y" default="-3.5"/>
+    <arg name="z" default="4.8"/>
+    <arg name="roll" default="0"/>
+    <arg name="pitch" default="0"/>
+    <arg name="yaw" default="0"/>
+    <arg name="model" default="$(find spawn_object)/media/grey_tote/simple_box.urdf"/>
+
+    <node name="box_spawn_urdf" pkg="astrobee_gazebo" type="spawn_model" 
+    args="-urdf -file $(arg model) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg name)" />
+</launch>
