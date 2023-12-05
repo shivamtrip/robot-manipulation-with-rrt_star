@@ -228,24 +228,23 @@ class RRTPlanner {
         // Constructor
         RRTPlanner(double epsilon, vector<double> start, vector<double> goal, int numofDOFs)
             : epsilon(epsilon), start(start), goal(goal), numofDOFs(numofDOFs) {
-            
-            // Initialize the MoveIt! robot model loader
+
+            // Load the robot model
             robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
             kinematic_model_ = robot_model_loader.getModel();
-
-            // Initialize the MoveIt! planning scene using the class member
             planning_scene_ = std::make_shared<planning_scene::PlanningScene>(kinematic_model_);
 
             // Define the pose of the table (transformed to robot's frame)
             geometry_msgs::Pose pose;
             pose.position.x = -0.32;
             pose.position.y = 0;
-            pose.position.z = 1.1; //higher than actual
+            pose.position.z = 0;
+            pose.orientation.w = 1;
             pose.orientation.x = 0;
             pose.orientation.y = 0;
             pose.orientation.z = 0;
- 
-            // Create a CollisionObject
+
+            // Create a Collision Object
             moveit_msgs::CollisionObject collision_object;
             collision_object.id = "table";  // Unique ID for the object
             collision_object.header.frame_id = "link_base";  // Set the frame of your robot
@@ -254,9 +253,9 @@ class RRTPlanner {
             shape_msgs::SolidPrimitive primitive;
             primitive.type = shape_msgs::SolidPrimitive::BOX;
             primitive.dimensions.resize(3);
-            primitive.dimensions[0] = 0.8;
+            primitive.dimensions[0] = 0.85;
             primitive.dimensions[1] = 1.5;
-            primitive.dimensions[2] = 0.03;
+            primitive.dimensions[2] = 0.08;
 
             collision_object.primitives.push_back(primitive);
             collision_object.primitive_poses.push_back(pose);
@@ -351,6 +350,7 @@ void RRTPlanner::addVertex(const Config& qNew, bool from_start) {
     vector<Node*>& nodes = from_start ? start_nodes : goal_nodes;
     Node* new_node = new Node(qNew);
     nodes.push_back(new_node);
+    cout << "Number of nodes: " << nodes.size() << endl;
 }
 
 // add edge to graph
@@ -707,7 +707,7 @@ Node* RRTPlanner::extendRRTStar(const Config& q) {
         Node* minCostNode = qNear;
 
         // check for nodes in neighborhood
-        auto nearby = nearbyNodes(qNew, 10);
+        auto nearby = nearbyNodes(qNew, 5);
         for (Node* neighbor : nearby) {
             double potentialCost = neighbor->cost + getCost(neighbor->config, qNew);
             if (potentialCost < minCost) {
@@ -735,6 +735,46 @@ Node* RRTPlanner::extendRRTStar(const Config& q) {
     return nullptr;
 }
 
+vector<double> random_config(vector<double> center)
+{
+    double max_angles[6];
+    double min_angles[6];
+    std::vector<double> rand_angles;
+    double range = 1.0;
+
+    max_angles[0] = 2.0*M_PI;
+    max_angles[1] = 2.0;
+    max_angles[2] = 0.1;
+    max_angles[3] = 2.0*M_PI;
+    max_angles[4] = 3.0;
+    max_angles[5] = 2.0*M_PI;
+    min_angles[0] = 0.0;
+    min_angles[1] = -2.0;
+    min_angles[2] = -3.8;
+    min_angles[3] = 0.0;
+    min_angles[4] = -1.6;
+    min_angles[5] = 0.0;
+
+    std::random_device rd;
+    std::mt19937 generator(rd());
+
+    for(int i=0; i<6; i++)
+    {
+        std::uniform_real_distribution<double> distribution(center[i] - range, center[i] + range);
+        double sample = distribution(generator);
+        
+        if(sample > max_angles[i]){
+            sample = max_angles[i];
+        }
+        else if(sample < min_angles[i]) {
+            sample = min_angles[i];
+        }
+        rand_angles.push_back(sample);
+    }
+
+    return rand_angles;
+}   
+
 Node* RRTPlanner::buildRRTStar(int K) {
     // nodes.clear();
 
@@ -750,9 +790,14 @@ Node* RRTPlanner::buildRRTStar(int K) {
         double biasProbability = static_cast<double>(rand()) / RAND_MAX; // random value between 0 and 1
 
         // 10% bias towards the goal
-        if (biasProbability <= 0.1) {
+        if (biasProbability <= 0.1){
             qRand = qGoal;
-        } else {
+            // qRand.values = random_config(qGoal.values);
+        // } 
+        // else if (biasProbability > 0.1  && biasProbability <= 0.2){
+        //     qRand.values = random_config(qInit.values);
+        }
+        else {
             qRand.values[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
             qRand.values[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
             qRand.values[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
@@ -781,13 +826,13 @@ static void plannerRRTStar(
     auto start_time = chrono::high_resolution_clock::now();
 
     // initialize values
-	double epsilon = 0.1;
+	double epsilon = 0.5;
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
 	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
 
     // plan
-	Node* result = rrt.buildRRTStar(100000);
+	Node* result = rrt.buildRRTStar(10000);
 
     // planning time
     auto plan_end = chrono::high_resolution_clock::now();
@@ -827,11 +872,11 @@ static void plannerRRTStar(
 
 int main(int argc, char** argv) {
 
-    // initialize node
+    // Initialize node
     ros::init(argc, argv, "planner_node");
     ros::NodeHandle nh;
 
-    // publisher to move the arm
+    // Publisher to move the arm
     ros::Publisher traj_publisher = nh.advertise<control_msgs::FollowJointTrajectoryActionGoal>("/xarm/xarm6_traj_controller/follow_joint_trajectory/goal", 10);
 
     ros::Rate loop_rate(1);
@@ -846,7 +891,8 @@ int main(int argc, char** argv) {
     geometry_msgs::Pose pose;
     pose.position.x = -0.32;
     pose.position.y = 0;
-    pose.position.z = 1.1; //higher than actual
+    pose.position.z = 0;
+    pose.orientation.w = 1;
     pose.orientation.x = 0;
     pose.orientation.y = 0;
     pose.orientation.z = 0;
@@ -860,9 +906,9 @@ int main(int argc, char** argv) {
     shape_msgs::SolidPrimitive primitive;
     primitive.type = shape_msgs::SolidPrimitive::BOX;
     primitive.dimensions.resize(3);
-    primitive.dimensions[0] = 0.8;
+    primitive.dimensions[0] = 0.85;
     primitive.dimensions[1] = 1.5;
-    primitive.dimensions[2] = 0.03;
+    primitive.dimensions[2] = 0.08;
 
     collision_object.primitives.push_back(primitive);
     collision_object.primitive_poses.push_back(pose);
@@ -879,9 +925,11 @@ int main(int argc, char** argv) {
 	int numOfDOFs = 6;
     int whichPlanner = 2;
     string outputFile = "output.txt";
-    string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0"; //todo: update this to our desired and final goal in radians
+    // string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0";
+    string start_pos_str = "0,-29,-31,0,61,0";
     // string goal_pos_str = "-87,26,-47,-88,93,-21"; goal
-    string goal_pos_str = "105,115,-135,105,87,19";
+    // string goal_pos_str = "-138,5,-43,-132,61,-25";
+    string goal_pos_str = "-135,32,-48,-135,77,-9";
 
     double* startPos = doubleArrayFromString(start_pos_str); // convert to arr and convert to radians
     double* goalPos = doubleArrayFromString(goal_pos_str);
@@ -968,11 +1016,12 @@ int main(int argc, char** argv) {
         point.accelerations = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
         point.time_from_start = ros::Duration(count); // Adjust the time_from_start as needed
         joint_goal.goal.trajectory.points.push_back(point);
-        count++;
+        count+=5;
     }
 
+    traj_publisher.publish(joint_goal);
+
     while (ros::ok()) {
-        traj_publisher.publish(joint_goal);
         // Add any additional code here related to action client, if needed
         // e.g., using SimpleActionClient to send the goal
         loop_rate.sleep();
