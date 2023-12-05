@@ -7,6 +7,16 @@ project(planner_node)
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
+find_package(catkin REQUIRED COMPONENTS
+    roscpp
+    gazebo_ros
+    sensor_msgs
+    control_msgs
+    std_msgs
+    trajectory_msgs
+)
+
+
 find_package(catkin REQUIRED)
 
 ## System dependencies are found with CMake's conventions
@@ -101,7 +111,7 @@ find_package(catkin REQUIRED)
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES planner_node
-#  CATKIN_DEPENDS other_catkin_pkg
+ CATKIN_DEPENDS roscpp
 #  DEPENDS system_lib
 )
 
@@ -113,7 +123,7 @@ catkin_package(
 ## Your package locations should be listed before other locations
 include_directories(
 # include
-# ${catkin_INCLUDE_DIRS}
+${catkin_INCLUDE_DIRS}
 )
 
 ## Declare a C++ library
@@ -130,6 +140,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
 # add_executable(${PROJECT_NAME}_node src/planner_node_node.cpp)
+add_executable(${PROJECT_NAME} control_arm.cpp)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
@@ -198,5 +209,8 @@ include_directories(
 #   target_link_libraries(${PROJECT_NAME}-test ${PROJECT_NAME})
 # endif()
 
+target_link_libraries(${PROJECT_NAME}
+  ${catkin_LIBRARIES}
+)
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
