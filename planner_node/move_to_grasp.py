@@ -1,80 +1,125 @@
 #!/usr/bin/env python
 
+import sys
+import copy
 import rospy
-from control_msgs.msg import FollowJointTrajectoryActionGoal, FollowJointTrajectoryAction
-from trajectory_msgs.msg import JointTrajectory, JointTrajectoryPoint
-from std_msgs.msg import Header, Duration
-import time
-import actionlib
+import moveit_commander
+# import moveit_msgs.msg
+import geometry_msgs.msg
+# from std_msgs.msg import String
+# from moveit_commander.conversions import pose_to_list
 
 class MoveArm:
-
     def __init__(self):
+        moveit_commander.roscpp_initialize(sys.argv)
+        rospy.init_node('ctrl_guy')
 
-        rospy.init_node('joint_trajectory_publisher', anonymous=True)
+        robot = moveit_commander.RobotCommander()
+        scene = moveit_commander.PlanningSceneInterface()
+        group_name = "xarm6"
+        self.move_group = moveit_commander.MoveGroupCommander(group_name)
+        
 
-        self.joint_control_pub = rospy.Publisher('/xarm/xarm6_traj_controller/follow_joint_trajectory/goal', FollowJointTrajectoryActionGoal, queue_size=10)
-        # self.joint_control_client = actionlib.ActionClient('/xarm/xarm6_traj_controller/follow_joint_trajectory', FollowJointTrajectoryAction)
+        # display_trajectory_publisher = rospy.Publisher(
+        #     "/move_group/display_planned_path",
+        #     moveit_msgs.msg.DisplayTrajectory,
+        #     queue_size=20,
+        # )
 
-    def publish_joint_trajectory(self):
+        # We can get the name of the reference frame for this robot:
+        planning_frame = self.move_group.get_planning_frame()
+        print("============ Planning frame: %s" % planning_frame)
 
-        rate = rospy.Rate(1)  # Adjust the publishing rate as needed
-        start_time = rospy.Time.now()
+        # We can also print the name of the end-effector link for this group:
+        eef_link = self.move_group.get_end_effector_link()
+        print("============ End effector link: %s" % eef_link)
 
-        # Create a FollowJointTrajectoryActionGoal message
-        joint_goal = FollowJointTrajectoryActionGoal()
+        # We can get a list of all the groups in the robot:
+        group_names = robot.get_group_names()
+        print("============ Available Planning Groups:", robot.get_group_names())
 
-        # Set header
-        joint_goal.header = Header()
-        joint_goal.header.seq = 1
-        joint_goal.header.stamp = start_time
-        joint_goal.header.frame_id = ''
+        # Sometimes for debugging it is useful to print the entire state of the
+        # robot:
+        print("============ Printing robot state")
+        print(robot.get_current_state())
+        print("")
 
-        # Set goal_id
-        joint_goal.goal_id.stamp = start_time
-        joint_goal.goal_id.id = "get_a_bottle"
+                
 
-        # Set goal trajectory
-        joint_goal.goal.trajectory = JointTrajectory()
-        joint_goal.goal.trajectory.header = Header()
-        joint_goal.goal.trajectory.header.seq = 0
-        joint_goal.goal.trajectory.header.stamp.secs = 0
-        joint_goal.goal.trajectory.header.stamp.nsecs = 0
-        joint_goal.goal.trajectory.header.frame_id = "world"
-        joint_goal.goal.trajectory.joint_names = ["joint1", "joint2", "joint3", "joint4", "joint5", "joint6"]
+                # The go command can be called with joint values, poses, or without any
+                # parameters if you have already set the pose or joint target for the group
+   
+    def GoToWaypoint(self, Waypoint, index):
+        try:
+            rospy.logwarn("Moving to Waypoint: "+ str(index) + "/60")
+            # We get the joint values from the group and change some of the values:
+            joint_goal = self.move_group.get_current_joint_values()
+            joint_goal[0] = Waypoint[0] 
+            joint_goal[1] = Waypoint[1]
+            joint_goal[2] = Waypoint[2]
+            joint_goal[3] = Waypoint[3]
+            joint_goal[4] = Waypoint[4]
+            joint_goal[5] = Waypoint[5]
 
-        # Set trajectory points
-        points = [
-            [0.2874493757963288, 0.6197583942477536, -2.332402190292693, -0.0007575067069822694, 1.7142849725813676, 0.2870580334845192],
-            [0.37909797455755034, 0.6558056980065312, -2.3313896837679846, -0.0005881642725461312, 1.6772435621002775, 0.37871871317667505],
-            [0.4707465733187719, 0.6918530017653088, -2.330377177243276, -0.0004188218381099931, 1.6402021516191876, 0.4703793928688309],
-            [0.5623951720799933, 0.7279003055240864, -2.329364670718568, -0.0002494794036738549, 1.6031607411380975, 0.5620400725609868],
-            [0.654043770841215, 0.763947609282864, -2.328352164193859, -8.013696923771674e-05, 1.5661193306570076, 0.6537007522531426],
-            [0.7456923696024365, 0.7999949130416416, -2.327339657669151, 8.920546519842142e-05, 1.5290779201759175, 0.7453614319452985]
-        ]
+            self.move_group.go(joint_goal, wait=True)
 
-        for pos in points:
-            point = JointTrajectoryPoint()
-            point.positions = pos
-            point.velocities = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-            point.accelerations = [1.0096451736637357, 0.0, 0.0, 0.0, 0.0, 0.0]
-            point.time_from_start = rospy.Duration(rospy.Time.now().to_sec() - start_time.to_sec())
-            joint_goal.goal.trajectory.points.append(point)
-
-        while not rospy.is_shutdown():
-            # self.joint_control_pub.publish(joint_goal)
-            self.joint_control_client.send_goal(joint_goal, self.dummy_cb)
-            rate.sleep()
+            # Calling ``stop()`` ensures that there is no residual movement
+            # self.move_group.stop()
+        except rospy.ROSInterruptException:
+            print("Failed to move to joint goal")
+            pass
 
 
-    def dummy_cb(self):
-        pass
+    def GoToCoordinates(self):
+        
+        waypoints = []
+
+        current_pose = self.move_group.get_current_pose().pose
+        pose_goal = geometry_msgs.msg.Pose()
+        pose_goal.orientation.x = -0.707
+        pose_goal.orientation.y = 0
+        pose_goal.orientation.z = -0.707
+        pose_goal.orientation.w = 0
+        pose_goal.position.x = current_pose.position.x + 1
+        pose_goal.position.y = current_pose.position.y
+        pose_goal.position.z = current_pose.position.z
+        self.move_group.set_pose_target(pose_goal)
+
+        waypoints.append(copy.deepcopy(pose_goal))
+
+        (plan, fraction) = self.move_group.compute_cartesian_path(
+                                        waypoints,   # waypoints to follow
+                                        0.01,        # eef_step
+                                        0.0)         # jump_threshold
+
+
+        self.move_group.execute(plan, wait=True)
 
 if __name__ == '__main__':
-
+    Trajectory = []
     robot_controller = MoveArm()
-    
-    try:
-        robot_controller.publish_joint_trajectory()
-    except rospy.ROSInterruptException:
-        pass
+    robot_controller.GoToCoordinates()
+
+
+    # while not rospy.is_shutdown():
+        # joint_goal = robot_controller.move_group.get_current_joint_values()
+        # for i in range (30):
+        #     joint_goal[0] = joint_goal[0]
+        #     joint_goal[1] = joint_goal[1]
+        #     joint_goal[2] = joint_goal[2] - 1 * 3.14159 / 180
+        #     joint_goal[3] = joint_goal[3] 
+        #     joint_goal[4] = joint_goal[4]
+        #     joint_goal[5] = joint_goal[5] 
+        #     Trajectory.append([joint_goal[0], joint_goal[1], joint_goal[2], joint_goal[3], joint_goal[4], joint_goal[5]])
+        # for j in range (30):
+        #     joint_goal[0] = joint_goal[0]
+        #     joint_goal[1] = joint_goal[1]
+        #     joint_goal[2] = joint_goal[2] + 1 * 3.14159 / 180
+        #     joint_goal[3] = joint_goal[3] 
+        #     joint_goal[4] = joint_goal[4]
+        #     joint_goal[5] = joint_goal[5] 
+        #     Trajectory.append([joint_goal[0], joint_goal[1], joint_goal[2], joint_goal[3], joint_goal[4], joint_goal[5]])
+
+        # for i in range(len(Trajectory)):
+        #     robot_controller.GoToWaypoint(Trajectory[i], i)
+        #     # rospy.sleep(0.1)
