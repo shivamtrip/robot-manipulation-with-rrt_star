@@ -9,6 +9,11 @@
 #include <moveit/robot_model_loader/robot_model_loader.h>
 #include <moveit/robot_state/robot_state.h>
 
+#include <control_msgs/FollowJointTrajectoryActionGoal.h>
+#include <trajectory_msgs/JointTrajectory.h>
+#include <trajectory_msgs/JointTrajectoryPoint.h>
+#include <std_msgs/Header.h>
+
 #include <math.h>
 #include <random>
 #include <vector>
@@ -75,7 +80,7 @@ double* doubleArrayFromString(string str) {
 	vector<string> vals = split(str, ",");
 	double* ans = new double[vals.size()];
 	for (int i = 0; i < vals.size(); ++i) {
-		ans[i] = std::stod(vals[i]);
+		ans[i] = std::stod(vals[i]) * PI/180;
 	}
 	return ans;
 }
@@ -103,27 +108,71 @@ std::vector<double> doubleArrayToVector(const double* arr, int size) {
 
 // check if the arm is in collision
 int IsValidArmConfiguration(const planning_scene::PlanningScenePtr& planning_scene, const robot_model::RobotModelPtr& kinematic_model, double* joint_values_arr){
+    // auto joint_values = doubleArrayToVector(joint_values_arr, 6);
+
+    // // Create a RobotState object for collision checking
+    // robot_state::RobotState current_state(kinematic_model);
+    // current_state.setJointGroupPositions("xarm6", joint_values);
+    
+    // // Check for collisions
+    // collision_detection::CollisionRequest collision_request;
+    // collision_detection::CollisionResult collision_result;
+    // planning_scene->checkCollision(collision_request, collision_result, current_state);
+
+    // if (collision_result.collision)
+    // {
+    //     // ROS_INFO("Collision detected for the given joint configuration!");    // auto joint_values = doubleArrayToVector(joint_values_arr, 6);
+
+    // // Create a RobotState object for collision checking
+    // robot_state::RobotState current_state(kinematic_model);
+    // current_state.setJointGroupPositions("xarm6", joint_values);
+    
+    // // Check for collisions
+    // collision_detection::CollisionRequest collision_request;
+    // collision_detection::CollisionResult collision_result;
+    // planning_scene->checkCollision(collision_request, collision_result, current_state);
+
+    // if (collision_result.collision)
+    // {
+    //     // ROS_INFO("Collision detected for the given joint configuration!");
+    //     return 0;
+    // }
+    // else
+    // {
+    //     // ROS_INFO("No collision detected for the given joint configuration.");
+    //     return 1;
+
+
     auto joint_values = doubleArrayToVector(joint_values_arr, 6);
 
     // Create a RobotState object for collision checking
     robot_state::RobotState current_state(kinematic_model);
     current_state.setJointGroupPositions("xarm6", joint_values);
-    
-    // Check for collisions
+    current_state.update(); // Update the robot state
+
+    // Set up collision request and result
     collision_detection::CollisionRequest collision_request;
+    collision_request.group_name = "xarm6"; // Specify the group name if needed
     collision_detection::CollisionResult collision_result;
+
+    // Check for collisions with both the robot itself and the environment
+    collision_request.contacts = true; // Optional: set to true if you want detailed contact information
+    collision_request.max_contacts = 1000; // Optional: set maximum number of contacts to report
+
+    // Check collision with the updated planning scene
     planning_scene->checkCollision(collision_request, collision_result, current_state);
 
-    if (collision_result.collision)
-    {
+    if (collision_result.collision) {
         // ROS_INFO("Collision detected for the given joint configuration!");
         return 0;
-    }
-    else
-    {
+    } else {
         // ROS_INFO("No collision detected for the given joint configuration.");
         return 1;
     }
+
+
+
+
 }
 
 //*******************************************************************************************************************//
@@ -189,9 +238,9 @@ class RRTPlanner {
 
             // Define the pose of the table (transformed to robot's frame)
             geometry_msgs::Pose pose;
-            pose.position.x = 0;
+            pose.position.x = -0.32;
             pose.position.y = 0;
-            pose.position.z = 1.021;
+            pose.position.z = 1.1; //higher than actual
             pose.orientation.x = 0;
             pose.orientation.y = 0;
             pose.orientation.z = 0;
@@ -205,15 +254,15 @@ class RRTPlanner {
             shape_msgs::SolidPrimitive primitive;
             primitive.type = shape_msgs::SolidPrimitive::BOX;
             primitive.dimensions.resize(3);
-            primitive.dimensions[0] = 3;
-            primitive.dimensions[1] = 3;
-            primitive.dimensions[2] = 0.02;
+            primitive.dimensions[0] = 0.8;
+            primitive.dimensions[1] = 1.5;
+            primitive.dimensions[2] = 0.03;
 
             collision_object.primitives.push_back(primitive);
             collision_object.primitive_poses.push_back(pose);
 
             // Add the collision object to the planning scene
-            planning_scene_->getWorldNonConst()->addToObject(collision_object);
+            planning_scene_->processCollisionObjectMsg(collision_object);
 
             // Update the planning scene
             planning_scene_->getCurrentStateNonConst().update();
@@ -397,8 +446,6 @@ static void plannerRRT(
     int numofDOFs,
     double ***plan,
     int *planlength
-    // planning_scene::PlanningScene planning_scene,
-    // robot_model::RobotModelPtr kinematic_model
     )
 {
     // start clock
@@ -555,8 +602,6 @@ static void plannerRRTConnect(
     int numofDOFs,
     double ***plan,
     int *planlength
-    // planning_scene::PlanningScene planning_scene,
-    // robot_model::RobotModelPtr kinematic_model
     )
 {
     // start clock
@@ -730,8 +775,6 @@ static void plannerRRTStar(
     int numofDOFs,
     double ***plan,
     int *planlength
-    // planning_scene::PlanningScene planning_scene,
-    // robot_model::RobotModelPtr kinematic_model
     )
 {
     // start clock
@@ -784,8 +827,14 @@ static void plannerRRTStar(
 
 int main(int argc, char** argv) {
 
+    // initialize node
     ros::init(argc, argv, "planner_node");
     ros::NodeHandle nh;
+
+    // publisher to move the arm
+    ros::Publisher traj_publisher = nh.advertise<control_msgs::FollowJointTrajectoryActionGoal>("/xarm/xarm6_traj_controller/follow_joint_trajectory/goal", 10);
+
+    ros::Rate loop_rate(1);
 
     // Load the robot model
     robot_model_loader::RobotModelLoader robot_model_loader("robot_description");
@@ -793,43 +842,49 @@ int main(int argc, char** argv) {
     planning_scene::PlanningScenePtr planning_scene;
     planning_scene = std::make_shared<planning_scene::PlanningScene>(kinematic_model);
 
+    // Define the pose of the table (transformed to robot's frame)
+    geometry_msgs::Pose pose;
+    pose.position.x = -0.32;
+    pose.position.y = 0;
+    pose.position.z = 1.1; //higher than actual
+    pose.orientation.x = 0;
+    pose.orientation.y = 0;
+    pose.orientation.z = 0;
+
+    // Create a Collision Object
+    moveit_msgs::CollisionObject collision_object;
+    collision_object.id = "table";  // Unique ID for the object
+    collision_object.header.frame_id = "link_base";  // Set the frame of your robot
+
+    // Define the shape and size of the table (e.g., a box)
+    shape_msgs::SolidPrimitive primitive;
+    primitive.type = shape_msgs::SolidPrimitive::BOX;
+    primitive.dimensions.resize(3);
+    primitive.dimensions[0] = 0.8;
+    primitive.dimensions[1] = 1.5;
+    primitive.dimensions[2] = 0.03;
+
+    collision_object.primitives.push_back(primitive);
+    collision_object.primitive_poses.push_back(pose);
+
+    // Add the collision object to the planning scene
+    planning_scene->processCollisionObjectMsg(collision_object);
+
+    // Update the planning scene
+    planning_scene->getCurrentStateNonConst().update();
+
     srand(time(NULL));
 
+    // params
 	int numOfDOFs = 6;
     int whichPlanner = 2;
     string outputFile = "output.txt";
-    string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0"; //todo: update this to our desired and final goal
-    string goal_pos_str = "0.0,0.279253,-2.00713,0.0,1.72788,0.0";
+    string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0"; //todo: update this to our desired and final goal in radians
+    // string goal_pos_str = "-87,26,-47,-88,93,-21"; goal
+    string goal_pos_str = "105,115,-135,105,87,19";
 
-    // nh.param("num_of_dofs", numOfDOFs);
-    // nh.param("output_file", outputFile);
-    // nh.param("planner_type", whichPlanner);
-    // nh.param("start_position", start_pos_str);
-    // nh.param("goal_position", goal_pos_str);
-
-    double* startPos = doubleArrayFromString(start_pos_str);
+    double* startPos = doubleArrayFromString(start_pos_str); // convert to arr and convert to radians
     double* goalPos = doubleArrayFromString(goal_pos_str);
-
-    // find a random valid start and goal position //todo: comment out while loop after we set start and goal
-    while(true){
-        startPos[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-        startPos[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
-        startPos[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
-        startPos[3] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-        startPos[4] = ((double) rand() / RAND_MAX) * -4.6 + 3; // -1.6 to 3.0
-        startPos[5] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-
-        goalPos[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-        goalPos[1] = ((double) rand() / RAND_MAX) * 4 - 2; // -2 to 2
-        goalPos[2] = ((double) rand() / RAND_MAX) * -3.9 + 0.1; // -3.8 to 0.1
-        goalPos[3] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-        goalPos[4] = ((double) rand() / RAND_MAX) * -4.6 + 3; // -1.6 to 3.0
-        goalPos[5] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
-
-        if( IsValidArmConfiguration(planning_scene, kinematic_model, startPos) && IsValidArmConfiguration(planning_scene, kinematic_model, goalPos) ){
-            break;
-        }
-    }
 
     cout << "start position: " << endl;
     for (size_t i = 0; i < numOfDOFs; i++) {
@@ -840,7 +895,7 @@ int main(int argc, char** argv) {
         cout << goalPos[i] << endl;
     }
 
-
+    // check initial config
 	if(!IsValidArmConfiguration(planning_scene, kinematic_model, startPos)||
 			!IsValidArmConfiguration(planning_scene, kinematic_model, goalPos)) {
 		throw runtime_error("Invalid start or goal configuration!\n");
@@ -863,31 +918,64 @@ int main(int argc, char** argv) {
         plannerRRTStar(startPos, goalPos, numOfDOFs, &plan, &planlength);
     }
 
-	//// Feel free to modify anything above.
-	//// If you modify something below, please change it back afterwards as my 
-	//// grading script will not work and you will recieve a 0.
-	///////////////////////////////////////
-
     // The solution's path should start with startPos and end with goalPos
     if (!equalDoubleArrays(plan[0], startPos, numOfDOFs) || 
     	!equalDoubleArrays(plan[planlength-1], goalPos, numOfDOFs)) {
 		throw std::runtime_error("Start or goal position not matching");
 	}
 
-	// Saves the solution to output file
-	std::ofstream m_log_fstream;
-	m_log_fstream.open(outputFile, std::ios::trunc); // Creates new or replaces existing file
-	if (!m_log_fstream.is_open()) {
-		throw std::runtime_error("Cannot open file");
-	}
-	/// write out all the joint angles in the plan sequentially
+    // Vector of vectors to store the trajectory
+    std::vector<std::vector<double>> trajectory;
+
     cout << "Generated Trajectory:" << endl;
-	for (int i = 0; i < planlength; ++i) {
-		for (int k = 0; k < numOfDOFs; ++k) {
-			m_log_fstream << plan[i][k] << ",";
+    for (int i = 0; i < planlength; ++i) {
+        // Temporary vector to store the current set of joint angles
+        std::vector<double> jointAngles;
+        
+        for (int k = 0; k < numOfDOFs; ++k) {
             cout << plan[i][k] << ",";
-		}
-		m_log_fstream << endl;
+
+            // Store the joint angle in the temporary vector
+            jointAngles.push_back(plan[i][k]);
+        }
+
+        // Add the set of joint angles to the trajectory
+        trajectory.push_back(jointAngles);
+
         cout << endl;
-	}
+    }
+
+    // Publish trajectory to arm
+    int count = 1;
+    control_msgs::FollowJointTrajectoryActionGoal joint_goal;
+    ros::Time start_time = ros::Time::now();
+
+    joint_goal.header.seq = 0;
+    joint_goal.header.stamp = start_time;
+    joint_goal.header.frame_id = "";
+    joint_goal.goal_id.stamp = start_time;
+    joint_goal.goal_id.id = "get_a_bottle";
+
+    joint_goal.goal.trajectory.header.seq = 0;
+    joint_goal.goal.trajectory.header.stamp = ros::Time(0);
+    joint_goal.goal.trajectory.header.frame_id = "world";
+    joint_goal.goal.trajectory.joint_names = {"joint1", "joint2", "joint3", "joint4", "joint5", "joint6"};
+
+    for (const auto &pos : trajectory) {
+        trajectory_msgs::JointTrajectoryPoint point;
+        point.positions = pos;
+        point.velocities = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        point.accelerations = {0.0, 0.0, 0.0, 0.0, 0.0, 0.0};
+        point.time_from_start = ros::Duration(count); // Adjust the time_from_start as needed
+        joint_goal.goal.trajectory.points.push_back(point);
+        count++;
+    }
+
+    while (ros::ok()) {
+        traj_publisher.publish(joint_goal);
+        // Add any additional code here related to action client, if needed
+        // e.g., using SimpleActionClient to send the goal
+        loop_rate.sleep();
+    }
+
 }
