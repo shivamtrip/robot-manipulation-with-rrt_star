@@ -108,7 +108,7 @@ int IsValidArmConfiguration(const planning_scene::PlanningScenePtr& planning_sce
     // Create a RobotState object for collision checking
     robot_state::RobotState current_state(kinematic_model);
     current_state.setJointGroupPositions("xarm6", joint_values);
-
+    
     // Check for collisions
     collision_detection::CollisionRequest collision_request;
     collision_detection::CollisionResult collision_result;
@@ -186,6 +186,37 @@ class RRTPlanner {
 
             // Initialize the MoveIt! planning scene using the class member
             planning_scene_ = std::make_shared<planning_scene::PlanningScene>(kinematic_model_);
+
+            // Define the pose of the table (transformed to robot's frame)
+            geometry_msgs::Pose pose;
+            pose.position.x = 0;
+            pose.position.y = 0;
+            pose.position.z = 1.021;
+            pose.orientation.x = 0;
+            pose.orientation.y = 0;
+            pose.orientation.z = 0;
+ 
+            // Create a CollisionObject
+            moveit_msgs::CollisionObject collision_object;
+            collision_object.id = "table";  // Unique ID for the object
+            collision_object.header.frame_id = "link_base";  // Set the frame of your robot
+
+            // Define the shape and size of the table (e.g., a box)
+            shape_msgs::SolidPrimitive primitive;
+            primitive.type = shape_msgs::SolidPrimitive::BOX;
+            primitive.dimensions.resize(3);
+            primitive.dimensions[0] = 3;
+            primitive.dimensions[1] = 3;
+            primitive.dimensions[2] = 0.02;
+
+            collision_object.primitives.push_back(primitive);
+            collision_object.primitive_poses.push_back(pose);
+
+            // Add the collision object to the planning scene
+            planning_scene_->getWorldNonConst()->addToObject(collision_object);
+
+            // Update the planning scene
+            planning_scene_->getCurrentStateNonConst().update();
         }
 
 		Node* nearestNeighbor(const Config& q, bool from_start = true);
@@ -768,7 +799,7 @@ int main(int argc, char** argv) {
     int whichPlanner = 2;
     string outputFile = "output.txt";
     string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0"; //todo: update this to our desired and final goal
-    string goal_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0";
+    string goal_pos_str = "0.0,0.279253,-2.00713,0.0,1.72788,0.0";
 
     // nh.param("num_of_dofs", numOfDOFs);
     // nh.param("output_file", outputFile);
@@ -799,6 +830,7 @@ int main(int argc, char** argv) {
             break;
         }
     }
+
     cout << "start position: " << endl;
     for (size_t i = 0; i < numOfDOFs; i++) {
         cout << startPos[i] << endl;

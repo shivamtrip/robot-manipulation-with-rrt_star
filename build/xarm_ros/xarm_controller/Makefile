@@ -242,90 +242,6 @@ controller_manager_msgs_generate_messages_py/fast:
 .PHONY : controller_manager_msgs_generate_messages_py/fast
 
 # Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/rule
-
-# Convenience name for target.
-control_toolbox_gencfg: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/rule
-.PHONY : control_toolbox_gencfg
-
-# fast build rule for target.
-control_toolbox_gencfg/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/build
-.PHONY : control_toolbox_gencfg/fast
-
-# Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-control_toolbox_generate_messages_cpp: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/rule
-.PHONY : control_toolbox_generate_messages_cpp
-
-# fast build rule for target.
-control_toolbox_generate_messages_cpp/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build
-.PHONY : control_toolbox_generate_messages_cpp/fast
-
-# Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-control_toolbox_generate_messages_eus: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/rule
-.PHONY : control_toolbox_generate_messages_eus
-
-# fast build rule for target.
-control_toolbox_generate_messages_eus/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/build
-.PHONY : control_toolbox_generate_messages_eus/fast
-
-# Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-control_toolbox_generate_messages_lisp: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/rule
-.PHONY : control_toolbox_generate_messages_lisp
-
-# fast build rule for target.
-control_toolbox_generate_messages_lisp/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build
-.PHONY : control_toolbox_generate_messages_lisp/fast
-
-# Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-control_toolbox_generate_messages_nodejs: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/rule
-.PHONY : control_toolbox_generate_messages_nodejs
-
-# fast build rule for target.
-control_toolbox_generate_messages_nodejs/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build
-.PHONY : control_toolbox_generate_messages_nodejs/fast
-
-# Convenience name for target.
-xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/rule:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/rule
-.PHONY : xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/rule
-
-# Convenience name for target.
-control_toolbox_generate_messages_py: xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/rule
-.PHONY : control_toolbox_generate_messages_py
-
-# fast build rule for target.
-control_toolbox_generate_messages_py/fast:
-	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/build
-.PHONY : control_toolbox_generate_messages_py/fast
-
-# Convenience name for target.
 xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/rule:
 	cd /home/sridevi/Documents/GetABottle.AI/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/rule
 .PHONY : xarm_ros/xarm_controller/CMakeFiles/xarm_hw.dir/rule
@@ -528,12 +444,6 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... test"
-	@echo "... control_toolbox_gencfg"
-	@echo "... control_toolbox_generate_messages_cpp"
-	@echo "... control_toolbox_generate_messages_eus"
-	@echo "... control_toolbox_generate_messages_lisp"
-	@echo "... control_toolbox_generate_messages_nodejs"
-	@echo "... control_toolbox_generate_messages_py"
 	@echo "... controller_manager_msgs_generate_messages_cpp"
 	@echo "... controller_manager_msgs_generate_messages_eus"
 	@echo "... controller_manager_msgs_generate_messages_lisp"

@@ -2070,6 +2070,162 @@ planner_node/fast:
 .PHONY : planner_node/fast
 
 #=============================================================================
+# Target rules for targets named gazebo_ros_gencfg
+
+# Build rule for target.
+gazebo_ros_gencfg: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_ros_gencfg
+.PHONY : gazebo_ros_gencfg
+
+# fast build rule for target.
+gazebo_ros_gencfg/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_ros_gencfg.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_ros_gencfg.dir/build
+.PHONY : gazebo_ros_gencfg/fast
+
+#=============================================================================
+# Target rules for targets named gazebo_msgs_generate_messages_cpp
+
+# Build rule for target.
+gazebo_msgs_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_msgs_generate_messages_cpp
+.PHONY : gazebo_msgs_generate_messages_cpp
+
+# fast build rule for target.
+gazebo_msgs_generate_messages_cpp/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_cpp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_cpp.dir/build
+.PHONY : gazebo_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named gazebo_msgs_generate_messages_eus
+
+# Build rule for target.
+gazebo_msgs_generate_messages_eus: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_msgs_generate_messages_eus
+.PHONY : gazebo_msgs_generate_messages_eus
+
+# fast build rule for target.
+gazebo_msgs_generate_messages_eus/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_eus.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_eus.dir/build
+.PHONY : gazebo_msgs_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named gazebo_msgs_generate_messages_lisp
+
+# Build rule for target.
+gazebo_msgs_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_msgs_generate_messages_lisp
+.PHONY : gazebo_msgs_generate_messages_lisp
+
+# fast build rule for target.
+gazebo_msgs_generate_messages_lisp/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_lisp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_lisp.dir/build
+.PHONY : gazebo_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named gazebo_msgs_generate_messages_nodejs
+
+# Build rule for target.
+gazebo_msgs_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_msgs_generate_messages_nodejs
+.PHONY : gazebo_msgs_generate_messages_nodejs
+
+# fast build rule for target.
+gazebo_msgs_generate_messages_nodejs/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_nodejs.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_nodejs.dir/build
+.PHONY : gazebo_msgs_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named gazebo_msgs_generate_messages_py
+
+# Build rule for target.
+gazebo_msgs_generate_messages_py: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 gazebo_msgs_generate_messages_py
+.PHONY : gazebo_msgs_generate_messages_py
+
+# fast build rule for target.
+gazebo_msgs_generate_messages_py/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_py.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/gazebo_msgs_generate_messages_py.dir/build
+.PHONY : gazebo_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_gencfg
+
+# Build rule for target.
+control_toolbox_gencfg: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_gencfg
+.PHONY : control_toolbox_gencfg
+
+# fast build rule for target.
+control_toolbox_gencfg/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_gencfg.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_gencfg.dir/build
+.PHONY : control_toolbox_gencfg/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_generate_messages_cpp
+
+# Build rule for target.
+control_toolbox_generate_messages_cpp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_cpp
+.PHONY : control_toolbox_generate_messages_cpp
+
+# fast build rule for target.
+control_toolbox_generate_messages_cpp/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build
+.PHONY : control_toolbox_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_generate_messages_eus
+
+# Build rule for target.
+control_toolbox_generate_messages_eus: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_eus
+.PHONY : control_toolbox_generate_messages_eus
+
+# fast build rule for target.
+control_toolbox_generate_messages_eus/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_eus.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_eus.dir/build
+.PHONY : control_toolbox_generate_messages_eus/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_generate_messages_lisp
+
+# Build rule for target.
+control_toolbox_generate_messages_lisp: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_lisp
+.PHONY : control_toolbox_generate_messages_lisp
+
+# fast build rule for target.
+control_toolbox_generate_messages_lisp/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build
+.PHONY : control_toolbox_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_generate_messages_nodejs
+
+# Build rule for target.
+control_toolbox_generate_messages_nodejs: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_nodejs
+.PHONY : control_toolbox_generate_messages_nodejs
+
+# fast build rule for target.
+control_toolbox_generate_messages_nodejs/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build
+.PHONY : control_toolbox_generate_messages_nodejs/fast
+
+#=============================================================================
+# Target rules for targets named control_toolbox_generate_messages_py
+
+# Build rule for target.
+control_toolbox_generate_messages_py: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_py
+.PHONY : control_toolbox_generate_messages_py
+
+# fast build rule for target.
+control_toolbox_generate_messages_py/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_py.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_toolbox_generate_messages_py.dir/build
+.PHONY : control_toolbox_generate_messages_py/fast
+
+#=============================================================================
 # Target rules for targets named control_msgs_generate_messages_cpp
 
 # Build rule for target.
@@ -2079,7 +2235,7 @@ control_msgs_generate_messages_cpp: cmake_check_build_system
 
 # fast build rule for target.
 control_msgs_generate_messages_cpp/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_cpp.dir/build.make xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_cpp.dir/build
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_cpp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_cpp.dir/build
 .PHONY : control_msgs_generate_messages_cpp/fast
 
 #=============================================================================
@@ -2092,7 +2248,7 @@ control_msgs_generate_messages_eus: cmake_check_build_system
 
 # fast build rule for target.
 control_msgs_generate_messages_eus/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_eus.dir/build.make xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_eus.dir/build
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_eus.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_eus.dir/build
 .PHONY : control_msgs_generate_messages_eus/fast
 
 #=============================================================================
@@ -2105,7 +2261,7 @@ control_msgs_generate_messages_lisp: cmake_check_build_system
 
 # fast build rule for target.
 control_msgs_generate_messages_lisp/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_lisp.dir/build.make xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_lisp.dir/build
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_lisp.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_lisp.dir/build
 .PHONY : control_msgs_generate_messages_lisp/fast
 
 #=============================================================================
@@ -2118,7 +2274,7 @@ control_msgs_generate_messages_nodejs: cmake_check_build_system
 
 # fast build rule for target.
 control_msgs_generate_messages_nodejs/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build.make xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_nodejs.dir/build
 .PHONY : control_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
@@ -2131,8 +2287,60 @@ control_msgs_generate_messages_py: cmake_check_build_system
 
 # fast build rule for target.
 control_msgs_generate_messages_py/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_py.dir/build.make xarm_ros/xarm_api/CMakeFiles/control_msgs_generate_messages_py.dir/build
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_py.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/control_msgs_generate_messages_py.dir/build
 .PHONY : control_msgs_generate_messages_py/fast
+
+#=============================================================================
+# Target rules for targets named roboticsgroup_gazebo_mimic_joint_plugin
+
+# Build rule for target.
+roboticsgroup_gazebo_mimic_joint_plugin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 roboticsgroup_gazebo_mimic_joint_plugin
+.PHONY : roboticsgroup_gazebo_mimic_joint_plugin
+
+# fast build rule for target.
+roboticsgroup_gazebo_mimic_joint_plugin/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/roboticsgroup_gazebo_mimic_joint_plugin.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/roboticsgroup_gazebo_mimic_joint_plugin.dir/build
+.PHONY : roboticsgroup_gazebo_mimic_joint_plugin/fast
+
+#=============================================================================
+# Target rules for targets named roboticsgroup_gazebo_disable_link_plugin
+
+# Build rule for target.
+roboticsgroup_gazebo_disable_link_plugin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 roboticsgroup_gazebo_disable_link_plugin
+.PHONY : roboticsgroup_gazebo_disable_link_plugin
+
+# fast build rule for target.
+roboticsgroup_gazebo_disable_link_plugin/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_gazebo_plugins/CMakeFiles/roboticsgroup_gazebo_disable_link_plugin.dir/build.make roboticsgroup_gazebo_plugins/CMakeFiles/roboticsgroup_gazebo_disable_link_plugin.dir/build
+.PHONY : roboticsgroup_gazebo_disable_link_plugin/fast
+
+#=============================================================================
+# Target rules for targets named roboticsgroup_upatras_gazebo_mimic_joint_plugin
+
+# Build rule for target.
+roboticsgroup_upatras_gazebo_mimic_joint_plugin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 roboticsgroup_upatras_gazebo_mimic_joint_plugin
+.PHONY : roboticsgroup_upatras_gazebo_mimic_joint_plugin
+
+# fast build rule for target.
+roboticsgroup_upatras_gazebo_mimic_joint_plugin/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_mimic_joint_plugin.dir/build.make roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_mimic_joint_plugin.dir/build
+.PHONY : roboticsgroup_upatras_gazebo_mimic_joint_plugin/fast
+
+#=============================================================================
+# Target rules for targets named roboticsgroup_upatras_gazebo_disable_link_plugin
+
+# Build rule for target.
+roboticsgroup_upatras_gazebo_disable_link_plugin: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 roboticsgroup_upatras_gazebo_disable_link_plugin
+.PHONY : roboticsgroup_upatras_gazebo_disable_link_plugin
+
+# fast build rule for target.
+roboticsgroup_upatras_gazebo_disable_link_plugin/fast:
+	$(MAKE) $(MAKESILENT) -f roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_disable_link_plugin.dir/build.make roboticsgroup_upatras_gazebo_plugins/CMakeFiles/roboticsgroup_upatras_gazebo_disable_link_plugin.dir/build
+.PHONY : roboticsgroup_upatras_gazebo_disable_link_plugin/fast
 
 #=============================================================================
 # Target rules for targets named xarm_ros_driver
@@ -2341,84 +2549,6 @@ controller_manager_msgs_generate_messages_py: cmake_check_build_system
 controller_manager_msgs_generate_messages_py/fast:
 	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/controller_manager_msgs_generate_messages_py.dir/build.make xarm_ros/xarm_controller/CMakeFiles/controller_manager_msgs_generate_messages_py.dir/build
 .PHONY : controller_manager_msgs_generate_messages_py/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_gencfg
-
-# Build rule for target.
-control_toolbox_gencfg: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_gencfg
-.PHONY : control_toolbox_gencfg
-
-# fast build rule for target.
-control_toolbox_gencfg/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_gencfg.dir/build
-.PHONY : control_toolbox_gencfg/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_generate_messages_cpp
-
-# Build rule for target.
-control_toolbox_generate_messages_cpp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_cpp
-.PHONY : control_toolbox_generate_messages_cpp
-
-# fast build rule for target.
-control_toolbox_generate_messages_cpp/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_cpp.dir/build
-.PHONY : control_toolbox_generate_messages_cpp/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_generate_messages_eus
-
-# Build rule for target.
-control_toolbox_generate_messages_eus: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_eus
-.PHONY : control_toolbox_generate_messages_eus
-
-# fast build rule for target.
-control_toolbox_generate_messages_eus/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_eus.dir/build
-.PHONY : control_toolbox_generate_messages_eus/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_generate_messages_lisp
-
-# Build rule for target.
-control_toolbox_generate_messages_lisp: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_lisp
-.PHONY : control_toolbox_generate_messages_lisp
-
-# fast build rule for target.
-control_toolbox_generate_messages_lisp/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_lisp.dir/build
-.PHONY : control_toolbox_generate_messages_lisp/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_generate_messages_nodejs
-
-# Build rule for target.
-control_toolbox_generate_messages_nodejs: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_nodejs
-.PHONY : control_toolbox_generate_messages_nodejs
-
-# fast build rule for target.
-control_toolbox_generate_messages_nodejs/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_nodejs.dir/build
-.PHONY : control_toolbox_generate_messages_nodejs/fast
-
-#=============================================================================
-# Target rules for targets named control_toolbox_generate_messages_py
-
-# Build rule for target.
-control_toolbox_generate_messages_py: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 control_toolbox_generate_messages_py
-.PHONY : control_toolbox_generate_messages_py
-
-# fast build rule for target.
-control_toolbox_generate_messages_py/fast:
-	$(MAKE) $(MAKESILENT) -f xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/build.make xarm_ros/xarm_controller/CMakeFiles/control_toolbox_generate_messages_py.dir/build
-.PHONY : control_toolbox_generate_messages_py/fast
 
 #=============================================================================
 # Target rules for targets named xarm_hw
@@ -3203,6 +3333,12 @@ help:
 	@echo "... dynamic_reconfigure_generate_messages_lisp"
 	@echo "... dynamic_reconfigure_generate_messages_nodejs"
 	@echo "... dynamic_reconfigure_generate_messages_py"
+	@echo "... gazebo_msgs_generate_messages_cpp"
+	@echo "... gazebo_msgs_generate_messages_eus"
+	@echo "... gazebo_msgs_generate_messages_lisp"
+	@echo "... gazebo_msgs_generate_messages_nodejs"
+	@echo "... gazebo_msgs_generate_messages_py"
+	@echo "... gazebo_ros_gencfg"
 	@echo "... geometry_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_eus"
 	@echo "... geometry_msgs_generate_messages_lisp"
@@ -3328,6 +3464,10 @@ help:
 	@echo "... move_test"
 	@echo "... obj2base"
 	@echo "... planner_node"
+	@echo "... roboticsgroup_gazebo_disable_link_plugin"
+	@echo "... roboticsgroup_gazebo_mimic_joint_plugin"
+	@echo "... roboticsgroup_upatras_gazebo_disable_link_plugin"
+	@echo "... roboticsgroup_upatras_gazebo_mimic_joint_plugin"
 	@echo "... sample_motion"
 	@echo "... servo_cartesian_test"
 	@echo "... test_tool_modbus"
