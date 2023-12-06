@@ -30,7 +30,7 @@ roslaunch spawn_object spawn_sdf.launch
 # Launch the planner launch file
 roslaunch planner planner.launch &
 
-sleep 9
+sleep 11
 
 # Run the first control node
 rosrun control_node move_to_grasp.py &

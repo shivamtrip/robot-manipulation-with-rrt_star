@@ -34,6 +34,7 @@
 #include <iostream> // cout, endl
 #include <fstream> // For reading/writing files
 #include <assert.h>
+#include <cstdlib>
 
 /* Planner Ids */
 #define RRT         0
@@ -59,6 +60,8 @@ using std::make_tuple;
 using std::tie;
 using std::cout;
 using std::endl;
+
+
 
 using namespace std;
 
@@ -310,6 +313,7 @@ Node* RRTPlanner::nearestNeighbor(const Config& q, bool from_start) {
 
 // move towards q (return true if moved, false if trapped)
 bool RRTPlanner::newConfig(const Node* qNear, const Config& q, Config& qNew) {
+    // srand(12345);
     double dist = 0.0;
     for (size_t i = 0; i < numofDOFs; i++) {
         dist += pow(qNear->config.values[i] - q.values[i], 2);
@@ -388,6 +392,7 @@ bool RRTPlanner::checkDist(const Config& q1, const Config& q2){
 }
 
 Node* RRTPlanner::buildRRT(int K) {
+    // srand(12345);
 	Config qInit(numofDOFs);
 	qInit.values = start;
     addVertex(qInit);
@@ -400,7 +405,7 @@ Node* RRTPlanner::buildRRT(int K) {
         double biasProbability = static_cast<double>(rand()) / RAND_MAX; // random value between 0 and 1
 
         // 10% bias towards the goal
-        if (biasProbability <= 0.1) {
+        if (biasProbability <= 0.01) {
             qRand = qGoal;
         } else {
             qRand.values[0] = ((double) rand() / RAND_MAX) * 2 * M_PI; // 0 to 2pi
@@ -453,7 +458,7 @@ static void plannerRRT(
     auto start_time = chrono::high_resolution_clock::now();
 
     // initialize values
-	double epsilon = 0.1; 
+	double epsilon = 1.5; 
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
 	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
@@ -609,7 +614,7 @@ static void plannerRRTConnect(
     auto start_time = chrono::high_resolution_clock::now();
 
     // initialize values
-	double epsilon = 0.1;
+	double epsilon = 1.5;
 	vector<double> start(armstart_anglesV_rad, armstart_anglesV_rad+numofDOFs);
 	vector<double> goal(armgoal_anglesV_rad, armgoal_anglesV_rad + numofDOFs);
 	RRTPlanner rrt(epsilon,start,goal,numofDOFs);
@@ -777,6 +782,7 @@ vector<double> random_config(vector<double> center)
 }   
 
 Node* RRTPlanner::buildRRTStar(int K) {
+    // srand(12345);
     // nodes.clear();
 
 	Config qInit(numofDOFs);
@@ -823,6 +829,7 @@ static void plannerRRTStar(
     int *planlength
     )
 {
+    // srand(12345);
     // start clock
     auto start_time = chrono::high_resolution_clock::now();
 
@@ -921,13 +928,14 @@ int main(int argc, char** argv) {
     planning_scene->getCurrentStateNonConst().update();
 
     srand(time(NULL));
-
+    // srand(12345);
     // params
 	int numOfDOFs = 6;
     int whichPlanner = 2;
     string outputFile = "output.txt";
     // string start_pos_str = "0.0,0.0,0.0,0.0,0.0,0.0";
-    string start_pos_str = "0,-29,-31,0,61,0";
+    string start_pos_str = "0,-29,-31,0,61,0"; //rrt*
+    // string start_pos_str = "0,-29,-31,5,61,10";
     string goal_pos_str = "-135,32,-48,-135,77,-9";
 
     double* startPos = doubleArrayFromString(start_pos_str); // convert to arr and convert to radians
