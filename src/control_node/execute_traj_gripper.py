@@ -48,7 +48,7 @@ class MoveArm:
         try:
             rospy.logwarn("Closing Gripper")
             joint_goal = self.move_group.get_current_joint_values()
-            joint_goal[0] = 30*3.14/180
+            joint_goal[0] = 25*3.14/180
             self.move_group.go(joint_goal, wait=True)
 
         except rospy.ROSInterruptException:

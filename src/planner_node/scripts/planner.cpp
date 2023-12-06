@@ -1020,12 +1020,10 @@ int main(int argc, char** argv) {
 
     traj_publisher.publish(joint_goal);
 
-    ros::Duration(10.0).sleep();
+    // ros::Duration(10.0).sleep();
 
-    while (ros::ok()) {
-        loop_rate.sleep();
-    }
-
-
+    // while (ros::ok()) {
+        // loop_rate.sleep();
+    // }
 
 }
